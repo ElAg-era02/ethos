@@ -3,271 +3,326 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ETHOS TECHNOLOGIES V3</title>
+  <title>ETHOS TECHNOLOGIES V4</title>
+
   <style>
-
-  /* ============================
-        MATRIX BACKGROUND
-  ============================ */
-  #matrix {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: -1;
-    pointer-events: none;
-  }
-
-  /* ============================
-        GRID
-  ============================ */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-    gap: 22px;
-    width: 100%;
-    max-width: 1250px;
-  }
-
-  /* ============================
-        SCROLLBAR
-  ============================ */
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { background: #050505; }
-  ::-webkit-scrollbar-thumb { background: #00ff00; border: 1px solid #003300; }
-  ::-webkit-scrollbar-thumb:hover { background: #33ff33; }
-
-  body.theme-red::-webkit-scrollbar-thumb { background: #ff0000; }
-  body.theme-blue::-webkit-scrollbar-thumb { background: #00aaff; }
-
-  /* ============================
-        ANIMACIONS PRO
-  ============================ */
-
-  /* Entrada hacker amb blur + glow + stretch */
-  @keyframes matrixReveal {
-    0% {
-      opacity: 0;
-      transform: translateY(12px) scale(0.96);
-      filter: blur(6px) brightness(2);
-      clip-path: inset(0 50% 0 50%);
+    /* ============================
+          MATRIX BACKGROUND
+    ============================ */
+    #matrix {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      pointer-events: none;
     }
-    40% {
-      opacity: 0.6;
-      filter: blur(3px) brightness(1.4);
-      clip-path: inset(0 20% 0 20%);
+
+    /* ============================
+          GRID
+    ============================ */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 22px;
+      width: 100%;
+      max-width: 1250px;
     }
-    100% {
+
+    /* ============================
+          SCROLLBAR
+    ============================ */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #050505; }
+    ::-webkit-scrollbar-thumb { background: #00ff00; border: 1px solid #003300; }
+    ::-webkit-scrollbar-thumb:hover { background: #33ff33; }
+    body.theme-red::-webkit-scrollbar-thumb { background: #ff0000; }
+    body.theme-blue::-webkit-scrollbar-thumb { background: #00aaff; }
+
+    /* ============================
+          ANIMACIONS GLOBALS
+    ============================ */
+
+    /* Boot sequence d’entrada */
+    @keyframes bootSequence {
+      0% { opacity: 0; filter: blur(8px); }
+      40% { opacity: 0.4; filter: blur(4px); }
+      100% { opacity: 1; filter: blur(0); }
+    }
+
+    /* Flicker CRT subtil */
+    @keyframes crtFlicker {
+      0%, 100% { opacity: 1; }
+      92% { opacity: 0.85; }
+      95% { opacity: 0.6; }
+      97% { opacity: 0.9; }
+    }
+
+    /* Glow respirant */
+    @keyframes ambientGlow {
+      0%, 100% { filter: drop-shadow(0 0 4px currentColor); }
+      50% { filter: drop-shadow(0 0 12px currentColor); }
+    }
+
+    /* Entrada hacker amb blur + glow + stretch */
+    @keyframes matrixReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+        filter: blur(6px) brightness(2);
+        clip-path: inset(0 50% 0 50%);
+      }
+      40% {
+        opacity: 0.6;
+        filter: blur(3px) brightness(1.4);
+        clip-path: inset(0 20% 0 20%);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0) brightness(1);
+        clip-path: inset(0 0 0 0);
+      }
+    }
+
+    /* Glitch curt per al títol */
+    @keyframes titleGlitch {
+      0% { transform: skew(0deg); }
+      20% { transform: skew(8deg); }
+      22% { transform: skew(-8deg); }
+      24% { transform: skew(0deg); }
+      100% { transform: skew(0deg); }
+    }
+
+    /* Scanline flash per canvi de tema */
+    @keyframes scanFlash {
+      0% { opacity: 0; }
+      10% { opacity: 0.8; }
+      100% { opacity: 0; }
+    }
+
+    .theme-transition {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(
+        rgba(255,255,255,0.12),
+        rgba(255,255,255,0.0)
+      );
+      pointer-events: none;
+      animation: scanFlash 0.25s ease-out;
+      z-index: 999999;
+    }
+
+    /* Typing effect per al text dels jocs */
+    @keyframes typing {
+      from { clip-path: inset(0 100% 0 0); }
+      to { clip-path: inset(0 0 0 0); }
+    }
+
+    /* Vibració digital */
+    @keyframes jitter {
+      0% { transform: translate(0,0); }
+      25% { transform: translate(-1px,1px); }
+      50% { transform: translate(1px,-1px); }
+      75% { transform: translate(-1px,-1px); }
+      100% { transform: translate(0,0); }
+    }
+
+    /* ============================
+          BODY
+    ============================ */
+    body {
+      cursor: url('https://files.catbox.moe/9744ia.cur'), auto;
+      background: #050505;
+      color: #00ff00;
+      font-family: 'Consolas', 'Courier New', monospace;
+      margin: 0;
+      padding: 82px 20px 70px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      animation:
+        bootSequence 0.9s ease-out,
+        crtFlicker 4s infinite steps(50),
+        ambientGlow 6s ease-in-out infinite;
+    }
+    body.theme-red { color: #ff0000; }
+    body.theme-blue { color: #00aaff; }
+
+    /* ============================
+          TOPBAR
+    ============================ */
+    #ethos-topbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 66px;
+      background: rgba(0,0,0,0.97);
+      border-bottom: 3px solid currentColor;
+      display: flex; align-items: center; gap: 18px;
+      padding: 0 30px;
+      z-index: 99999;
+      animation: matrixReveal 0.6s ease forwards;
+    }
+    .top-btn {
+      background: transparent;
+      border: 1px solid currentColor;
+      color: currentColor;
+      padding: 12px 26px;
+      font-size: 0.98rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: 0.25s ease;
+      opacity: 0.85;
+    }
+    .top-btn:hover {
       opacity: 1;
-      transform: translateY(0) scale(1);
-      filter: blur(0) brightness(1);
-      clip-path: inset(0 0 0 0);
+      box-shadow: 0 0 14px currentColor;
+      transform: translateY(-2px);
     }
-  }
 
-  /* Flicker subtil per títols */
-  @keyframes crtFlicker {
-    0%, 100% { opacity: 1; }
-    92% { opacity: 0.85; }
-    95% { opacity: 0.6; }
-    97% { opacity: 0.9; }
-  }
+    /* ============================
+          TITLE
+    ============================ */
+    h1 {
+      font-size: 2.6rem;
+      letter-spacing: 7px;
+      border-bottom: 3px solid currentColor;
+      text-shadow: 0 0 15px currentColor;
+      margin: 10px 0 25px 0;
+      text-transform: uppercase;
+      animation: matrixReveal 0.7s ease forwards;
+    }
+    h1:hover {
+      animation: titleGlitch 0.25s linear;
+    }
 
-  /* Glow pulsant hacker */
-  @keyframes neonPulse {
-    0%, 100% { text-shadow: 0 0 10px currentColor; }
-    50% { text-shadow: 0 0 20px currentColor; }
-  }
+    /* ============================
+          VPN NOTICE
+    ============================ */
+    .vpn-notice {
+      color: currentColor;
+      font-size: 1.2rem;
+      margin-bottom: 32px;
+      text-shadow: 0 0 8px currentColor;
+      text-align: center;
+      animation: matrixReveal 0.8s ease forwards;
+    }
 
-  /* ============================
-        BODY
-  ============================ */
-  body {
-    cursor: url('https://files.catbox.moe/9744ia.cur'), auto;
-    background: #050505;
-    color: #00ff00;
-    font-family: 'Consolas', 'Courier New', monospace;
-    margin: 0;
-    padding: 82px 20px 70px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    position: relative;
-    animation: crtFlicker 4s infinite steps(50);
-  }
+    /* ============================
+          SEARCH
+    ============================ */
+    .search-wrapper { width: 100%; max-width: 650px; margin-bottom: 32px; }
+    .search-container {
+      border: 2.5px solid currentColor;
+      padding: 16px 22px;
+      background: rgba(0,0,0,0.9);
+      animation: matrixReveal 0.9s ease forwards;
+    }
+    #searchBar {
+      background: transparent;
+      border: none;
+      color: currentColor;
+      outline: none;
+      font-size: 1.15rem;
+      width: 100%;
+    }
 
-  body.theme-red { color: #ff0000; }
-  body.theme-blue { color: #00aaff; }
+    /* ============================
+          CATEGORIES
+    ============================ */
+    .categories {
+      display: flex; gap: 12px; margin-bottom: 40px;
+      flex-wrap: wrap; justify-content: center;
+      animation: matrixReveal 1s ease forwards;
+    }
+    .cat-btn {
+      background: transparent;
+      border: 1px solid currentColor;
+      color: currentColor;
+      padding: 6px 14px; 
+      font-size: 0.75rem;
+      transition: 0.25s ease;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+    .cat-btn:hover {
+      opacity: 1;
+      box-shadow: 0 0 10px currentColor;
+      transform: translateY(-2px);
+    }
+    .cat-btn.active {
+      opacity: 1;
+      border-width: 2px;
+      background: rgba(0,0,0,0.8);
+    }
 
-  /* ============================
-        TOPBAR
-  ============================ */
-  #ethos-topbar {
-    position: fixed; top: 0; left: 0; right: 0;
-    height: 66px;
-    background: rgba(0,0,0,0.97);
-    border-bottom: 3px solid currentColor;
-    display: flex; align-items: center; gap: 18px;
-    padding: 0 30px;
-    z-index: 99999;
-    animation: matrixReveal 0.6s ease forwards;
-  }
+    /* ============================
+          GAME CARDS
+    ============================ */
+    .game-card {
+      position: relative;
+      display: flex;
+      opacity: 1;
+    }
+    .game-card.animate {
+      animation: matrixReveal 0.4s ease forwards;
+    }
 
-  .top-btn {
-    background: transparent;
-    border: 1px solid currentColor;
-    color: currentColor;
-    padding: 12px 26px;
-    font-size: 0.98rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: 0.25s ease;
-    opacity: 0.85;
-  }
+    .btn-hacker {
+      flex-grow: 1;
+      background: transparent;
+      border: 1px solid currentColor;
+      color: currentColor;
+      padding: 16px 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: 0.25s ease;
+      text-align: left;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      font-size: 1.02rem;
+    }
 
-  .top-btn:hover {
-    opacity: 1;
-    box-shadow: 0 0 14px currentColor;
-    transform: translateY(-2px);
-  }
+    /* Text amb typing effect */
+    .btn-hacker span {
+      display: inline-block;
+      clip-path: inset(0 100% 0 0);
+      animation: typing 0.4s steps(20) forwards;
+    }
 
-  /* ============================
-        TITLE
-  ============================ */
-  h1 {
-    font-size: 2.6rem;
-    letter-spacing: 7px;
-    border-bottom: 3px solid currentColor;
-    text-shadow: 0 0 15px currentColor;
-    margin: 10px 0 25px 0;
-    text-transform: uppercase;
-    animation: matrixReveal 0.7s ease forwards, neonPulse 3s infinite;
-  }
+    /* Hover amb vibració digital */
+    .btn-hacker:hover {
+      opacity: 1;
+      box-shadow: 0 0 14px currentColor;
+      animation: jitter 0.12s linear;
+    }
 
-  /* ============================
-        VPN NOTICE
-  ============================ */
-  .vpn-notice {
-    color: currentColor;
-    font-size: 1.2rem;
-    margin-bottom: 32px;
-    text-shadow: 0 0 8px currentColor;
-    text-align: center;
-    animation: matrixReveal 0.8s ease forwards;
-  }
+    .fav-star {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: transparent; border: none;
+      color: currentColor; font-size: 1.5rem;
+      opacity: 0.7; cursor: pointer;
+      transition: 0.25s ease;
+    }
+    .fav-star:hover { opacity: 1; transform: translateY(-50%) scale(1.25); }
+    .fav-star.active { color: #ffff00; text-shadow: 0 0 12px #ffff00; }
 
-  /* ============================
-        SEARCH
-  ============================ */
-  .search-wrapper { width: 100%; max-width: 650px; margin-bottom: 32px; }
-  .search-container {
-    border: 2.5px solid currentColor;
-    padding: 16px 22px;
-    background: rgba(0,0,0,0.9);
-    animation: matrixReveal 0.9s ease forwards;
-  }
-  #searchBar {
-    background: transparent;
-    border: none;
-    color: currentColor;
-    outline: none;
-    font-size: 1.15rem;
-    width: 100%;
-  }
-
-  /* ============================
-        CATEGORIES
-  ============================ */
-  .categories {
-    display: flex; gap: 12px; margin-bottom: 40px;
-    flex-wrap: wrap; justify-content: center;
-    animation: matrixReveal 1s ease forwards;
-  }
-
-  .cat-btn {
-    background: transparent;
-    border: 1px solid currentColor;
-    color: currentColor;
-    padding: 6px 14px; 
-    font-size: 0.75rem;
-    transition: 0.25s ease;
-    text-transform: uppercase;
-    opacity: 0.7;
-  }
-
-  .cat-btn:hover {
-    opacity: 1;
-    box-shadow: 0 0 10px currentColor;
-    transform: translateY(-2px);
-  }
-
-  .cat-btn.active {
-    opacity: 1;
-    border-width: 2px;
-    background: rgba(0,0,0,0.8);
-  }
-
-  /* ============================
-        GAME CARDS
-  ============================ */
-  .game-card {
-    position: relative;
-    display: flex;
-    opacity: 1;
-  }
-
-  .game-card.animate {
-    animation: matrixReveal 0.4s ease forwards;
-  }
-
-  .btn-hacker {
-    flex-grow: 1;
-    background: transparent;
-    border: 1px solid currentColor;
-    color: currentColor;
-    padding: 16px 20px;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: 0.25s ease;
-    text-align: left;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    cursor: pointer;
-    font-size: 1.02rem;
-  }
-
- .btn-hacker:hover {
-  opacity: 1;
-  box-shadow: 0 0 14px currentColor;
-  transform: scale(0.96) translateY(-1px);
-}
-
-  .fav-star {
-    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-    background: transparent; border: none;
-    color: currentColor; font-size: 1.5rem;
-    opacity: 0.7; cursor: pointer;
-    transition: 0.25s ease;
-  }
-
-  .fav-star:hover { opacity: 1; transform: translateY(-50%) scale(1.25); }
-  .fav-star.active { color: #ffff00; text-shadow: 0 0 12px #ffff00; }
-
-  /* ============================
-        STATUS BAR
-  ============================ */
-  .status-bar {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    height: 52px; padding: 0 30px;
-    background: rgba(0,0,0,0.97);
-    border-top: 3px solid currentColor;
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 0.84rem; z-index: 99999;
-    animation: matrixReveal 1.1s ease forwards;
-  }
-
-</style>
+    /* ============================
+          STATUS BAR
+    ============================ */
+    .status-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: 52px; padding: 0 30px;
+      background: rgba(0,0,0,0.97);
+      border-top: 3px solid currentColor;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.84rem; z-index: 99999;
+      animation: matrixReveal 1.1s ease forwards;
+    }
+  </style>
 </head>
 <body>
   <canvas id="matrix"></canvas>
@@ -285,62 +340,61 @@
     <a href="https://chromewebstore.google.com/detail/free-vpn-for-chrome-vpn-p/majdfhpaihoncoakbjgbdhglocklcgno" target="_blank" style="color:currentColor; text-decoration:underline;">DESCARGAR FREEVPN</a>
   </div>
 
-<div class="search-wrapper">
-  <div class="search-container">
-    <input type="text" id="searchBar" placeholder="SYSTEM SEARCH ..." autocomplete="off">
+  <div class="search-wrapper">
+    <div class="search-container">
+      <input type="text" id="searchBar" placeholder="SYSTEM SEARCH ..." autocomplete="off">
+    </div>
   </div>
-</div>
 
-<div class="categories" id="catBar"></div>
-<div class="grid" id="listaJuegos"></div>
+  <div class="categories" id="catBar"></div>
+  <div class="grid" id="listaJuegos"></div>
 
-<div class="status-bar">
-  <div>NÚMERO DE JUEGOS: <span id="counter">0</span></div>
-  <div><span id="clock">00:00:00</span></div>
-  <div>v.236</div>
-</div>
+  <div class="status-bar">
+    <div>NÚMERO DE JUEGOS: <span id="counter">0</span></div>
+    <div><span id="clock">00:00:00</span></div>
+    <div>v.236</div>
+  </div>
 
-<script>
-/* ============================
-      MATRIX BACKGROUND
-============================ */
-const canvas = document.getElementById('matrix');
-const ctx = canvas.getContext('2d');
+  <script>
+    /* ============================
+          MATRIX BACKGROUND
+    ============================ */
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
 
-function resizeCanvas() {
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+    function resizeCanvas() {
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789@#$%&*';
-const fontSize = 14;
-let drops = Array(Math.floor(canvas.width / fontSize)).fill(1);
+    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789@#$%&*';
+    const fontSize = 14;
+    let drops = Array(Math.floor(canvas.width / fontSize)).fill(1);
 
-function drawMatrix() {
-  ctx.fillStyle = 'rgba(5,5,5,0.06)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(5,5,5,0.06)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.fillStyle = '#0f0';
-  ctx.font = fontSize + 'px Courier New';
+      ctx.fillStyle = '#0f0';
+      ctx.font = fontSize + 'px Courier New';
 
-  for (let i = 0; i < drops.length; i++) {
-    const text = chars.charAt(Math.floor(Math.random() * chars.length));
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-    drops[i]++;
-  }
-}
-setInterval(drawMatrix, 50);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 50);
 
-
-/* ============================
-      VARIABLES BASE
-============================ */
-let juegos = [
-    { nombre: "Ballistic", url: "https://ubg98.github.io/Ballistic/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-ballistic.png" },
+    /* ============================
+          VARIABLES BASE
+    ============================ */
+    let juegos = [
+        { nombre: "Ballistic", url: "https://ubg98.github.io/Ballistic/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-ballistic.png" },
   { nombre: "Blumgi Slime", url: "https://ubg98.github.io/BlumgiSlime/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-blumgi-slime.png" },
   { nombre: "Fruit Ninja", url: "https://ubg98.github.io/FruitNinja/", categoria: "PUZZLE", logo: "https://example.com/logo-fruit-ninja.png" },
   { nombre: "Save the Doge", url: "https://ubg98.github.io/SaveTheDoge/", categoria: "PUZZLE", logo: "https://example.com/logo-save-the-doge.png" },
@@ -451,205 +505,201 @@ let juegos = [
   { nombre: "Venge.io", url: "https://venge.io/", categoria: "ACCION", logo: "https://example.com/logo-venge-io.png" },
   { nombre: "Vex4", url: "https://ubg98.github.io/Vex4/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-vex4.png" },
   { nombre: "Tetris", url: "https://block-blast.io/block-blast.embed", categoria: "ARCADE", logo: "https://example.com/logo-tetris.png" }
-];
+    ];
 
-let favoritos = JSON.parse(localStorage.getItem("ethos_favs")) || [];
-let currentCat = "ALL";
+    let favoritos = JSON.parse(localStorage.getItem("ethos_favs")) || [];
+    let currentCat = "ALL";
 
-const catBar = document.getElementById("catBar");
-const contenedor = document.getElementById("listaJuegos");
-const searchBar = document.getElementById("searchBar");
+    const catBar = document.getElementById("catBar");
+    const contenedor = document.getElementById("listaJuegos");
+    const searchBar = document.getElementById("searchBar");
 
+    /* ============================
+          GENERAR CATEGORÍAS
+    ============================ */
+    function generarCategorias() {
+      if (currentCat === "FAVS" && favoritos.length === 0) {
+        currentCat = "ALL";
+      }
 
-/* ============================
-      GENERAR CATEGORÍAS
-============================ */
-function generarCategorias() {
+      catBar.innerHTML = "";
+      let finalTags = [];
 
-  // Si estem a FAVS i ja no hi ha favorits → tornem a ALL
-  if (currentCat === "FAVS" && favoritos.length === 0) {
-    currentCat = "ALL";
-  }
+      const extraTags = [...new Set(juegos.map(j => j.categoria))].sort();
 
-  catBar.innerHTML = "";
-  let finalTags = [];
+      if (favoritos.length > 0) finalTags.push("FAVS");
+      finalTags.push("ALL");
+      finalTags = [...finalTags, ...extraTags];
 
-  const extraTags = [...new Set(juegos.map(j => j.categoria))].sort();
+      finalTags.forEach(tag => {
+        const btn = document.createElement("button");
 
-  if (favoritos.length > 0) finalTags.push("FAVS");
-  finalTags.push("ALL");
-  finalTags = [...finalTags, ...extraTags];
+        btn.className = `cat-btn ${currentCat === tag ? "active" : ""}`;
+        btn.dataset.cat = tag;
 
-  finalTags.forEach(tag => {
-    const btn = document.createElement("button");
+        btn.textContent =
+          tag === "FAVS" ? "* FAVORITOS" :
+          tag === "ALL" ? "SYSTEM_ALL" :
+          tag;
 
-    btn.className = `cat-btn ${currentCat === tag ? "active" : ""}`;
-    btn.dataset.cat = tag;
+        btn.onclick = (e) => {
+          currentCat = e.target.dataset.cat;
+          generarCategorias();
+          mostrarJuegos(searchBar.value);
+        };
 
-    btn.textContent =
-      tag === "FAVS" ? "* FAVORITOS" :
-      tag === "ALL" ? "SYSTEM_ALL" :
-      tag;
+        catBar.appendChild(btn);
+      });
+    }
 
-    btn.onclick = (e) => {
-      currentCat = e.target.dataset.cat;
-      generarCategorias();
+    /* ============================
+          MOSTRAR JUEGOS
+    ============================ */
+    function mostrarJuegos(filtro = "", animate = true) {
+      contenedor.innerHTML = "";
+
+      const visibles = Array.from(document.querySelectorAll(".cat-btn"))
+                            .map(btn => btn.dataset.cat);
+
+      if (!visibles.includes(currentCat)) {
+        currentCat = "ALL";
+      }
+
+      let filtrados = juegos.filter(j => {
+        const matchSearch = j.nombre.toLowerCase().includes(filtro.toLowerCase());
+        const matchCat =
+          currentCat === "ALL" ||
+          (currentCat === "FAVS"
+            ? favoritos.includes(j.nombre)
+            : j.categoria === currentCat);
+
+        return matchSearch && matchCat;
+      });
+
+      filtrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
+
+      filtrados.forEach((juego, index) => {
+        const div = document.createElement("div");
+        div.className = "game-card" + (animate ? " animate" : "");
+        div.style.animationDelay = `${Math.min(index * 0.03, 1.2)}s`;
+
+        div.innerHTML = `
+          <button class="btn-hacker" onclick="abrirJuego('${juego.url}')">
+            <span>> ${juego.nombre}</span>
+          </button>
+          <button class="fav-star ${favoritos.includes(juego.nombre) ? "active" : ""}"
+                  onclick="toggleFav('${juego.nombre}', event)">
+            ★
+          </button>
+        `;
+
+        contenedor.appendChild(div);
+      });
+
+      document.getElementById("counter").textContent = filtrados.length;
+    }
+
+    /* ============================
+          FAVORITOS
+    ============================ */
+    function toggleFav(nombre, e) {
+      e.stopPropagation();
+
+      if (favoritos.includes(nombre)) {
+        favoritos = favoritos.filter(f => f !== nombre);
+      } else {
+        favoritos.push(nombre);
+      }
+
+      localStorage.setItem("ethos_favs", JSON.stringify(favoritos));
+
+      mostrarJuegos(searchBar.value, false);
+    }
+
+    /* ============================
+          ABRIR JUEGO
+    ============================ */
+    function abrirJuego(url) {
+      const win = window.open("about:blank", "_blank");
+
+      win.document.write(`
+        <html>
+          <head>
+            <title>ETHOS — GAME MODE</title>
+            <style>
+              html, body {
+                margin: 0; padding: 0;
+                background: #000;
+                overflow: hidden;
+                height: 100%; width: 100%;
+              }
+              iframe {
+                border: none;
+                width: 100vw; height: 100vh;
+              }
+            </style>
+          </head>
+          <body>
+            <iframe src="${url}" allowfullscreen></iframe>
+          </body>
+        </html>
+      `);
+
+      win.document.close();
+    }
+
+    /* ============================
+          BUSCADOR
+    ============================ */
+    searchBar.addEventListener("input", () => {
       mostrarJuegos(searchBar.value);
-    };
+    });
 
-    catBar.appendChild(btn);
-  });
-}
+    /* ============================
+          TEMES
+    ============================ */
+    let themeIndex = 0;
 
+    function cycleTheme() {
+      document.body.classList.remove("theme-red", "theme-blue");
 
-/* ============================
-      MOSTRAR JUEGOS
-============================ */
-function mostrarJuegos(filtro = "", animate = true) {
-  contenedor.innerHTML = "";
+      themeIndex = (themeIndex + 1) % 3;
 
-  // Parche anti-bug: si currentCat no existeix visualment → ALL
-  const visibles = Array.from(document.querySelectorAll(".cat-btn"))
-                        .map(btn => btn.dataset.cat);
+      if (themeIndex === 1) document.body.classList.add("theme-red");
+      if (themeIndex === 2) document.body.classList.add("theme-blue");
 
-  if (!visibles.includes(currentCat)) {
-    currentCat = "ALL";
-  }
+      const flash = document.createElement("div");
+      flash.className = "theme-transition";
+      document.body.appendChild(flash);
+      setTimeout(() => flash.remove(), 300);
+    }
 
-  let filtrados = juegos.filter(j => {
-    const matchSearch = j.nombre.toLowerCase().includes(filtro.toLowerCase());
-    const matchCat =
-      currentCat === "ALL" ||
-      (currentCat === "FAVS"
-        ? favoritos.includes(j.nombre)
-        : j.categoria === currentCat);
+    /* ============================
+          TOPBAR BUTTONS
+    ============================ */
+    function openEthosAI() {
+      window.open("https://ethos-ai.vercel.app", "_blank");
+    }
 
-    return matchSearch && matchCat;
-  });
+    function openSpotify() {
+      window.open("https://open.spotify.com", "_blank");
+    }
 
-  // Orden alfabètic
-  filtrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    /* ============================
+          CLOCK
+    ============================ */
+    function updateClock() {
+      document.getElementById("clock").textContent =
+        new Date().toLocaleTimeString("es-ES");
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
 
-  filtrados.forEach((juego, index) => {
-    const div = document.createElement("div");
-    div.className = "game-card" + (animate ? " animate" : "");
-    div.style.animationDelay = `${Math.min(index * 0.03, 1.2)}s`;
-
-    div.innerHTML = `
-      <button class="btn-hacker" onclick="abrirJuego('${juego.url}')">
-        ${juego.nombre}
-      </button>
-
-      <button class="fav-star ${favoritos.includes(juego.nombre) ? "active" : ""}"
-              onclick="toggleFav('${juego.nombre}', event)">
-        ★
-      </button>
-    `;
-
-    contenedor.appendChild(div);
-  });
-
-    document.getElementById("counter").textContent = filtrados.length;
-}
-
-/* ============================
-      FAVORITOS
-============================ */
-function toggleFav(nombre, e) {
-  e.stopPropagation();
-
-  if (favoritos.includes(nombre)) {
-    favoritos = favoritos.filter(f => f !== nombre);
-  } else {
-    favoritos.push(nombre);
-  }
-
-  localStorage.setItem("ethos_favs", JSON.stringify(favoritos));
-
-  // Re-render sense animació (per evitar parpadejos)
-  mostrarJuegos(searchBar.value, false);
-}
-
-/* ============================
-      ABRIR JUEGO
-============================ */
-function abrirJuego(url) {
-  const win = window.open("about:blank", "_blank");
-
-  win.document.write(`
-    <html>
-      <head>
-        <title>ETHOS — GAME MODE</title>
-        <style>
-          html, body {
-            margin: 0; padding: 0;
-            background: #000;
-            overflow: hidden;
-            height: 100%; width: 100%;
-          }
-          iframe {
-            border: none;
-            width: 100vw; height: 100vh;
-          }
-        </style>
-      </head>
-      <body>
-        <iframe src="${url}" allowfullscreen></iframe>
-      </body>
-    </html>
-  `);
-
-  win.document.close();
-}
-
-/* ============================
-      BUSCADOR
-============================ */
-searchBar.addEventListener("input", () => {
-  mostrarJuegos(searchBar.value);
-});
-
-/* ============================
-      TEMES
-============================ */
-let themeIndex = 0;
-
-function cycleTheme() {
-  document.body.classList.remove("theme-red", "theme-blue");
-
-  themeIndex = (themeIndex + 1) % 3;
-
-  if (themeIndex === 1) document.body.classList.add("theme-red");
-  if (themeIndex === 2) document.body.classList.add("theme-blue");
-}
-
-/* ============================
-      TOPBAR BUTTONS
-============================ */
-function openEthosAI() {
-  window.open("https://ethos-ai.vercel.app", "_blank");
-}
-
-function openSpotify() {
-  window.open("https://open.spotify.com", "_blank");
-}
-
-/* ============================
-      CLOCK
-============================ */
-function updateClock() {
-  document.getElementById("clock").textContent =
-    new Date().toLocaleTimeString("es-ES");
-}
-setInterval(updateClock, 1000);
-updateClock();
-
-/* ============================
-      INIT
-============================ */
-generarCategorias();
-mostrarJuegos();
-</script>
-
+    /* ============================
+          INIT
+    ============================ */
+    generarCategorias();
+    mostrarJuegos();
+  </script>
 </body>
 </html>
