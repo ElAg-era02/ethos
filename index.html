@@ -208,10 +208,14 @@
   </div>
 
 <script>
-// MATRIX
+// MATRIX BACKGROUND
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
-function resizeCanvas() { canvas.width = innerWidth; canvas.height = innerHeight; }
+
+function resizeCanvas() {
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+}
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
@@ -233,7 +237,7 @@ function drawMatrix() {
 }
 setInterval(drawMatrix, 50);
 
-// LISTA DE JUEGOS
+// JUEGOS
 let juegos = [
   { nombre: "Ballistic", url: "https://ubg98.github.io/Ballistic/", categoria: "PLATAFORMAS" },
   { nombre: "Blumgi Slime", url: "https://ubg98.github.io/BlumgiSlime/", categoria: "PLATAFORMAS" },
@@ -355,7 +359,7 @@ const catBar = document.getElementById("catBar");
 const contenedor = document.getElementById("listaJuegos");
 const searchBar = document.getElementById("searchBar");
 
-// ==================== GENERAR CATEGORÍAS (CORREGIT) ====================
+// GENERAR CATEGORÍAS
 function generarCategorias() {
   if (currentCat === "FAVS" && favoritos.length === 0) {
     currentCat = "ALL";
@@ -385,7 +389,7 @@ function generarCategorias() {
   });
 }
 
-// ==================== MOSTRAR JUEGOS (AMB ORDEN ALFABÈTIC) ====================
+// MOSTRAR JUEGOS (amb ordre alfabètic)
 function mostrarJuegos(filtro = "", animate = true) {
   contenedor.innerHTML = "";
 
@@ -396,7 +400,7 @@ function mostrarJuegos(filtro = "", animate = true) {
                        (currentCat === "FAVS" ? favoritos.includes(j.nombre) : j.categoria === currentCat);
       return matchSearch && matchCat;
     })
-    .sort((a, b) => a.nombre.localeCompare(b.nombre));   // Orden alfabètic
+    .sort((a, b) => a.nombre.localeCompare(b.nombre));
 
   filtrados.forEach((juego, index) => {
     const div = document.createElement("div");
@@ -417,7 +421,7 @@ function mostrarJuegos(filtro = "", animate = true) {
   document.getElementById("counter").textContent = filtrados.length;
 }
 
-// ==================== TOGGLE FAVORITO (CORREGIT) ====================
+// TOGGLE FAVORITO (sense cridar generarCategorias)
 function toggleFav(nombre, e) {
   e.stopPropagation();
 
@@ -427,11 +431,6 @@ function toggleFav(nombre, e) {
 
   localStorage.setItem("ethos_favs", JSON.stringify(favoritos));
 
-  if (currentCat === "FAVS" && favoritos.length === 0) {
-    currentCat = "ALL";
-  }
-
-  generarCategorias();
   mostrarJuegos(searchBar.value, false);
 }
 
