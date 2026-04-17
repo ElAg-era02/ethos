@@ -56,14 +56,9 @@
       transition: filter 0.3s ease;
     }
 
-    /* TEMES — canvi global de color via hue-rotate */
-    body.theme-red {
-      filter: hue-rotate(120deg);
-    }
-
-    body.theme-blue {
-      filter: hue-rotate(220deg);
-    }
+    /* TEMES */
+    body.theme-red { filter: hue-rotate(120deg); }
+    body.theme-blue { filter: hue-rotate(220deg); }
 
     button, input, a,
     *[onclick],
@@ -97,7 +92,6 @@
       color: #0f0;
       padding: 8px 18px;
       font-size: 0.9rem;
-      cursor: pointer;
       transition: 0.25s;
       text-transform: uppercase;
       font-family: inherit;
@@ -186,8 +180,7 @@
       color: rgba(0,255,0,0.6);
       padding: 6px 14px;
       font-size: 0.75rem;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s;
       text-transform: uppercase;
     }
 
@@ -204,117 +197,7 @@
       box-shadow: 0 0 15px rgba(0,255,0,0.3);
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 12px;
-      width: 100%;
-      max-width: 1200px;
-      margin-bottom: 50px;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- MATRIX BACKGROUND -->
-  <canvas id="matrix"></canvas>
-  <!-- INTRO SCREEN -->
-<div id="introScreen" style="
-  position:absolute;
-  inset:0;
-  z-index:20;
-  background:rgba(0,0,0,0.7);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  opacity:1;
-  animation:introFade 1.5s ease forwards;
-">
-
-  <div id="text" style="
-    font-size:2.6rem;
-    text-align:center;
-    letter-spacing:3px;
-    max-width:90%;
-    line-height:1.7;
-    text-shadow:0 0 10px #0f0;
-    margin-bottom:40px;
-  ">
-    BIENVENIDO, JUGADOR
-  </div>
-
-  <img id="logo"
-       src="https://cdn-1.webcatalog.io/catalog/hacker-typer/hacker-typer-icon.png"
-       style="width:260px; height:260px; margin:20px 0 40px; opacity:0; filter:drop-shadow(0 0 25px #0f0); border-radius:20px;">
-
-  <div id="footerText" style="
-    font-size:2rem;
-    letter-spacing:3px;
-    text-shadow:0 0 10px #0f0;
-    opacity:0;
-  ">
-    Ethos Technologies v2.7
-  </div>
-
-</div>
-
-<!-- LOGIN SCREEN -->
-<div id="loginScreen" style="display:none; position:absolute; inset:0; z-index:10; background:rgba(0,0,0,0.55); flex-direction:column; justify-content:center; align-items:center;">
-
-  <div id="terminalBox" class="terminal">
-    <div class="fakeInput" id="fakeInput">
-      <span id="fakeText" class="fakeInputText"></span>
-      <span id="cursor" class="cursor">█</span>
-    </div>
-
-    <input id="realInput" type="password" autocomplete="off">
-  </div>
-
-  <div id="alertBox"></div>
-  <div id="lockMessage"></div>
-  <div id="accessDeniedBig">ACCESS DENIED</div>
-  <div id="accessGranted">ACCESS GRANTED</div>
-
-</div>
-
-  <!-- TOPBAR -->
-  <div id="ethos-topbar">
-    <button class="top-btn" onclick="openEthosAI()">[ ETHOS_AI ]</button>
-    <button class="top-btn" onclick="openSpotify()">[ SPOTIFY ]</button>
-    <button class="top-btn" onclick="cycleTheme()">[ THEME ]</button>
-  </div>
-
-  <h1>[ ETHOS_SYSTEM ]</h1>
-
-  <div class="vpn-notice">
-    JUEGOS BLOQUEADOS? —
-    <a href="https://chromewebstore.google.com/detail/free-vpn-for-chrome-vpn-p/majdfhpaihoncoakbjgbdhglocklcgno?pli=1" target="_blank">
-      DESCARGAR FREEVPN
-    </a>
-  </div>
-
-  <!-- SEARCH BAR -->
-  <div class="search-wrapper">
-    <div class="search-container">
-      <input type="text" id="searchBar" placeholder="SYSTEM SEARCH ..." autocomplete="off">
-    </div>
-  </div>
-
-  <!-- CATEGORIES -->
-  <div class="categories" id="catBar"></div>
-
-  <!-- GAME GRID -->
-  <div class="grid" id="listaJuegos"></div>
-
-  <!-- STATUS BAR -->
-  <div class="status-bar">
-    <div>NÚMERO DE JUEGOS: <span id="counter">0</span></div>
-    <div><span id="clock">00:00:00</span></div>
-    <div>v.236</div>
-  </div>
-  <!-- GAME CARD STYLES -->
-  <style>
+    /* GAME CARD */
     .game-card {
       position: relative;
       display: flex;
@@ -323,7 +206,7 @@
     }
 
     .game-card.animate {
-      animation: matrixReveal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      animation: matrixReveal 0.4s ease forwards;
     }
 
     .game-logo {
@@ -347,7 +230,6 @@
       color: #0f0;
       padding: 14px;
       font-weight: bold;
-      cursor: pointer;
       text-transform: uppercase;
       transition: 0.3s;
       text-align: left;
@@ -373,18 +255,11 @@
       border: none;
       color: rgba(0,255,0,0.3);
       font-size: 1.2rem;
-      cursor: pointer;
-      z-index: 5;
       transition: 0.2s;
     }
 
-    .fav-star:hover {
-      transform: translateY(-50%) scale(1.3);
-      color: #ff0;
-    }
-
     .fav-star.active {
-      color: #ff0 !important;
+      color: #ff0;
       text-shadow: 0 0 10px #ff0;
     }
 
@@ -407,19 +282,100 @@
       z-index: 99999;
     }
   </style>
+</head>
+
+<body>
+
+  <!-- MATRIX -->
+  <canvas id="matrix"></canvas>
+
+  <!-- INTRO -->
+  <div id="introScreen" style="
+    position:absolute; inset:0; z-index:20;
+    background:rgba(0,0,0,0.85);
+    display:flex; flex-direction:column;
+    justify-content:center; align-items:center;
+    opacity:1; transition:opacity 1.5s ease;
+  ">
+    <div style="font-size:2.4rem; letter-spacing:4px; text-shadow:0 0 12px #0f0; margin-bottom:40px;">
+      BIENVENIDO, JUGADOR
+    </div>
+
+    <img src="https://cdn-1.webcatalog.io/catalog/hacker-typer/hacker-typer-icon.png"
+         style="width:240px; height:240px; margin-bottom:40px; filter:drop-shadow(0 0 25px #0f0);">
+
+    <div style="font-size:1.6rem; letter-spacing:3px; text-shadow:0 0 10px #0f0;">
+      Ethos Technologies v2.7
+    </div>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="loginScreen" style="
+    display:none; position:absolute; inset:0;
+    z-index:10; background:rgba(0,0,0,0.55);
+    flex-direction:column; justify-content:center; align-items:center;
+  ">
+    <div id="terminalBox" class="terminal">
+      <div class="fakeInput" id="fakeInput">
+        <span id="fakeText" class="fakeInputText"></span>
+        <span id="cursor" class="cursor">█</span>
+      </div>
+      <input id="realInput" type="password" autocomplete="off">
+    </div>
+
+    <div id="alertBox"></div>
+    <div id="lockMessage"></div>
+    <div id="accessDeniedBig">ACCESS DENIED</div>
+    <div id="accessGranted">ACCESS GRANTED</div>
+  </div>
+
+  <!-- TOPBAR -->
+  <div id="ethos-topbar">
+    <button class="top-btn" onclick="openEthosAI()">[ ETHOS_AI ]</button>
+    <button class="top-btn" onclick="openSpotify()">[ SPOTIFY ]</button>
+    <button class="top-btn" onclick="cycleTheme()">[ THEME ]</button>
+  </div>
+
+  <h1>[ ETHOS_SYSTEM ]</h1>
+
+  <div class="vpn-notice">
+    JUEGOS BLOQUEADOS? —
+    <a href="https://chromewebstore.google.com/detail/free-vpn-for-chrome-vpn-p/majdfhpaihoncoakbjgbdhglocklcgno?pli=1" target="_blank">
+      DESCARGAR FREEVPN
+    </a>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-wrapper">
+    <div class="search-container">
+      <input type="text" id="searchBar" placeholder="SYSTEM SEARCH ..." autocomplete="off">
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="categories" id="catBar"></div>
+
+  <!-- GRID -->
+  <div class="grid" id="listaJuegos"></div>
+
+  <!-- STATUS -->
+  <div class="status-bar">
+    <div>NÚMERO DE JUEGOS: <span id="counter">0</span></div>
+    <div><span id="clock">00:00:00</span></div>
+    <div>v.236</div>
+  </div>
+
 <script>
-/* ---------------------------------------------------
-      MATRIX BACKGROUND (FONS HACKER)
-----------------------------------------------------*/
+/* MATRIX */
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 
 function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
 }
 resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+addEventListener('resize', resizeCanvas);
 
 const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789@#$%&*';
 const fontSize = 14;
@@ -427,28 +383,38 @@ let columns = Math.floor(canvas.width / fontSize);
 let drops = Array(columns).fill(1);
 
 function drawMatrix() {
-  ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = 'rgba(5,5,5,0.05)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.fillStyle = '#0f0';
   ctx.font = fontSize + 'px Courier New';
 
-  for (let i = 0; i < drops.length; i++) {
-    const text = chars.charAt(Math.floor(Math.random() * chars.length));
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+  for (let i=0;i<drops.length;i++) {
+    const text = chars.charAt(Math.floor(Math.random()*chars.length));
+    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
 
-    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-      drops[i] = 0;
-    }
+    if (drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
     drops[i]++;
   }
 }
-
 setInterval(drawMatrix, 50);
-/* ---------------------------------------------------
-      LISTA DE JUEGOS (juegosRaw)
-      *IMPORTANTE*: tag → categoria
-----------------------------------------------------*/
+
+/* INTRO → LOGIN */
+setTimeout(() => {
+  const intro = document.getElementById('introScreen');
+  const login = document.getElementById('loginScreen');
+
+  intro.style.opacity = '0';
+
+  setTimeout(() => {
+    intro.style.display = 'none';
+    login.style.display = 'flex';
+    realInput.focus();
+  }, 1500);
+}, 5000);
+
+/* LISTA DE JUEGOS (BUIT) */
+const juegosRaw = [];
 const juegosRaw = [setInterval(drawMatrix, 50);
   { nombre: "Ballistic", url: "https://ubg98.github.io/Ballistic/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-ballistic.png" },
   { nombre: "Blumgi Slime", url: "https://ubg98.github.io/BlumgiSlime/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-blumgi-slime.png" },
@@ -562,37 +528,13 @@ const juegosRaw = [setInterval(drawMatrix, 50);
   { nombre: "Vex4", url: "https://ubg98.github.io/Vex4/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-vex4.png" },
   { nombre: "Tetris", url: "https://block-blast.io/block-blast.embed", categoria: "ARCADE", logo: "https://example.com/logo-tetris.png" }
     
-];
+const juegos = juegosRaw;
 
-/* Ordenar juegos alfabéticamente */
-const juegos = juegosRaw.sort((a, b) => a.nombre.localeCompare(b.nombre));
-
-const contenedor = document.getElementById("listaJuegos");
-const searchBar = document.getElementById("searchBar");
+/* CATEGORIES */
 const catBar = document.getElementById("catBar");
-
 let currentCat = "ALL";
 let favoritos = JSON.parse(localStorage.getItem("ethos_favs")) || [];
 
-/* ---------------------------------------------------
-      FAVORITOS
-----------------------------------------------------*/
-function toggleFav(nombre, e) {
-  e.stopPropagation();
-
-  favoritos = favoritos.includes(nombre)
-    ? favoritos.filter(f => f !== nombre)
-    : [...favoritos, nombre];
-
-  localStorage.setItem("ethos_favs", JSON.stringify(favoritos));
-
-  generarCategorias();
-  mostrarJuegos(searchBar.value, false);
-}
-
-/* ---------------------------------------------------
-      CATEGORÍAS
-----------------------------------------------------*/
 function generarCategorias() {
   catBar.innerHTML = "";
   let finalTags = [];
@@ -600,14 +542,12 @@ function generarCategorias() {
   const extraTags = [...new Set(juegos.map(j => j.categoria))].sort();
 
   if (favoritos.length > 0) finalTags.push("FAVS");
-
   finalTags.push("ALL");
   finalTags = [...finalTags, ...extraTags];
 
   finalTags.forEach(tag => {
     const btn = document.createElement("button");
     btn.className = `cat-btn ${currentCat === tag ? "active" : ""}`;
-
     btn.textContent =
       tag === "FAVS" ? "* FAVORITOS" :
       tag === "ALL" ? "SYSTEM_ALL" :
@@ -623,14 +563,15 @@ function generarCategorias() {
   });
 }
 
-/* ---------------------------------------------------
-      MOSTRAR JUEGOS
-----------------------------------------------------*/
+/* MOSTRAR JUEGOS */
+const contenedor = document.getElementById("listaJuegos");
+const searchBar = document.getElementById("searchBar");
+
 function mostrarJuegos(filtro = "", animate = true) {
   contenedor.innerHTML = "";
 
   const filtrados = juegos.filter(j => {
-    const matchSearch = j.nombre.toLowerCase().includes(filtro.toLowerCase());
+    const matchSearch = j.nombre?.toLowerCase().includes(filtro.toLowerCase());
     const matchCat =
       currentCat === "ALL" ||
       (currentCat === "FAVS"
@@ -643,12 +584,7 @@ function mostrarJuegos(filtro = "", animate = true) {
   filtrados.forEach((juego, index) => {
     const div = document.createElement("div");
     div.className = "game-card" + (animate ? " animate" : "");
-
-    if (animate) {
-      div.style.animationDelay = `${Math.min(index * 0.03, 1.2)}s`;
-    } else {
-      div.style.opacity = "1";
-    }
+    div.style.animationDelay = `${Math.min(index * 0.03, 1.2)}s`;
 
     div.innerHTML = `
       <button class="btn-hacker" onclick="abrirJuego('${juego.url}')">
@@ -669,88 +605,20 @@ function mostrarJuegos(filtro = "", animate = true) {
   document.getElementById("counter").textContent = filtrados.length;
 }
 
-/* ---------------------------------------------------
-      ABRIR JUEGO EN IFRAME
-----------------------------------------------------*/
+/* FAVORITOS */
+function toggleFav(nombre, e) {
+  e.stopPropagation();
+
+  favoritos = favoritos.includes(nombre)
+    ? favoritos.filter(f => f !== nombre)
+    : [...favoritos, nombre];
+
+  localStorage.setItem("ethos_favs", JSON.stringify(favoritos));
+
+  generarCategorias();
+  mostrarJuegos(searchBar.value, false);
+}
+
+/* ABRIR JUEGO */
 function abrirJuego(url) {
-  const win = window.open("about:blank", "_blank");
-  const content = `
-    <html>
-    <head>
-      <title>ETHOS_SYSTEM</title>
-      <style>
-        body, html { margin:0; padding:0; height:100vh; overflow:hidden; background:#000; }
-        iframe { border:0; width:100%; height:100%; }
-      </style>
-    </head>
-    <body>
-      <iframe src="${url.trim()}" allowfullscreen></iframe>
-    </body>
-    </html>
-  `;
-  win.document.write(content);
-  win.document.close();
-}
-
-/* ---------------------------------------------------
-      ETHOS_AI (ja l'arreglarem després)
-----------------------------------------------------*/
-function openEthosAI() {
-  window.open(
-    "https://script.google.com/macros/s/AKfycbw9TPeZki-pAXzV_S3_OHvpP9fC-5k9yU-UVNfJVSGVor3ls6IvcYvkDGKJg-FH_nwl/exec",
-    "_blank"
-  );
-}
-
-/* ---------------------------------------------------
-      SPOTIFY
-----------------------------------------------------*/
-function openSpotify() {
-  window.open(
-    "https://open.spotify.com/embed/playlist/4L7KXkQeIQpxWNdXMfBVSM?utm_source=generator&theme=0",
-    "_blank"
-  );
-}
-
-/* ---------------------------------------------------
-      RELOJ
-----------------------------------------------------*/
-setInterval(() => {
-  document.getElementById("clock").textContent =
-    new Date().toLocaleTimeString();
-}, 1000);
-
-/* ---------------------------------------------------
-      BUSCADOR
-----------------------------------------------------*/
-searchBar.addEventListener("input", e => {
-  mostrarJuegos(e.target.value);
-});
-
-/* ---------------------------------------------------
-      INICIALIZACIÓN
-----------------------------------------------------*/
-generarCategorias();
-mostrarJuegos();
-
-/* ---------------------------------------------------
-      NUEVO SISTEMA DE TEMAS
-      VERD → VERMELL → BLAU → VERD
-----------------------------------------------------*/
-let themeState = 0;
-
-function cycleTheme() {
-  themeState = (themeState + 1) % 3;
-
-  document.body.classList.remove("theme-red", "theme-blue");
-
-  if (themeState === 1) {
-    document.body.classList.add("theme-red");
-  } else if (themeState === 2) {
-    document.body.classList.add("theme-blue");
-  }
-}
-</script>
-
-</body>
-</html>
+  const win =
