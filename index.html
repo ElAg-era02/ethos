@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ETHOS TECHNOLOGIES V4.1</title>
+  <title>ETHOS TECHNOLOGIES V4.2</title>
 
   <style>
     /* ============================
@@ -304,25 +304,30 @@
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
-    function resizeCanvas() {
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-  drops = Array(Math.floor(canvas.width / fontSize)).fill(1); // ← recalcular sempre
-}
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
     const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789@#$%&*';
 
     const fontSize = 16;
-    let drops = Array(Math.floor(canvas.width / fontSize)).fill(1);
+    let drops = [];
+
+    function resizeCanvas() {
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+      drops = Array(Math.floor(canvas.width / fontSize)).fill(1);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function getRainColor() {
+      if (document.body.classList.contains("theme-red")) return "#ff0000";
+      if (document.body.classList.contains("theme-blue")) return "#00aaff";
+      return "#00ff00";
+    }
 
     function drawMatrix() {
       ctx.fillStyle = 'rgba(0,0,0,0.04)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = '#0f0';
+      ctx.fillStyle = getRainColor();
       ctx.font = fontSize + 'px Courier New';
 
       for (let i = 0; i < drops.length; i++) {
@@ -342,7 +347,8 @@
     /* ============================
           VARIABLES BASE
     ============================ */
-    let juegos = [  { nombre: "Ballistic", url: "https://ubg98.github.io/Ballistic/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-ballistic.png" },
+    let juegos = [
+        { nombre: "Ballistic", url: "https://ubg98.github.io/Ballistic/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-ballistic.png" },
   { nombre: "Blumgi Slime", url: "https://ubg98.github.io/BlumgiSlime/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-blumgi-slime.png" },
   { nombre: "Fruit Ninja", url: "https://ubg98.github.io/FruitNinja/", categoria: "PUZZLE", logo: "https://example.com/logo-fruit-ninja.png" },
   { nombre: "Save the Doge", url: "https://ubg98.github.io/SaveTheDoge/", categoria: "PUZZLE", logo: "https://example.com/logo-save-the-doge.png" },
