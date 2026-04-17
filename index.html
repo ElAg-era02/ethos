@@ -373,7 +373,11 @@ function generarCategorias() {
   finalTags.forEach(tag => {
     const btn = document.createElement("button");
     btn.className = `cat-btn ${currentCat === tag ? "active" : ""}`;
-    btn.textContent = tag === "FAVS" ? "* FAVORITOS" : tag === "ALL" ? "SYSTEM_ALL" : tag;
+    btn.dataset.cat = tag;   // ← valor real
+btn.textContent =
+  tag === "FAVS" ? "* FAVORITOS" :
+  tag === "ALL" ? "SYSTEM_ALL" :
+  tag;
 
     btn.onclick = () => {
       currentCat = tag;
