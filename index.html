@@ -6,10 +6,6 @@
 <title>ETHOS TECHNOLOGIES V2.7 • ACCESS</title>
 
 <style>
-/* ================================ */
-/*          GLOBAL + CRT FX         */
-/* ================================ */
-
 html, body {
     margin: 0;
     padding: 0;
@@ -20,21 +16,7 @@ html, body {
     overflow: hidden;
 }
 
-body {
-    position: relative;
-    animation: crtFlicker 0.12s infinite;
-}
-
-@keyframes crtFlicker {
-    0% { opacity: 0.97; }
-    50% { opacity: 1; }
-    100% { opacity: 0.98; }
-}
-
-/* ================================ */
-/*          INTRO SCREEN            */
-/* ================================ */
-
+/* Pantalla d'intro */
 #introScreen {
     position: absolute;
     inset: 0;
@@ -43,15 +25,11 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 28px;
-    letter-spacing: 2px;
     opacity: 1;
     transition: opacity 1.5s ease;
 }
 
-/* ================================ */
-/*          LOGIN SCREEN            */
-/* ================================ */
-
+/* Pantalla login */
 #loginScreen {
     position: absolute;
     inset: 0;
@@ -62,15 +40,6 @@ body {
     justify-content: center;
 }
 
-.loginEnter {
-    animation: loginFade 1.2s ease forwards;
-}
-
-@keyframes loginFade {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
 #terminal {
     width: 80%;
     max-width: 600px;
@@ -79,20 +48,23 @@ body {
     font-size: 20px;
 }
 
+/* Input real — FORÇAT */
+#realInput {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 999999; /* per sobre de tot */
+    width: 100%;
+    height: 100%;
+    pointer-events: auto; /* accepta clics */
+    tabindex: 0;
+}
+
 #fakeText {
     display: inline-block;
     min-height: 24px;
 }
-
-#realInput {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* ================================ */
-/*          ALERT BOX               */
-/* ================================ */
 
 #alertBox {
     margin-top: 20px;
@@ -100,157 +72,109 @@ body {
     opacity: 0;
     transition: opacity 0.3s ease;
 }
+.alert-red { color: #f00; }
+.alert-green { color: #0f0; }
 
-.alert-red {
-    color: #f00;
-}
-
-.alert-green {
-    color: #0f0;
-}
-
-/* ================================ */
-/*          ACCESS EFFECTS          */
-/* ================================ */
-
-.access-denied {
-    animation: deniedFlash 0.2s steps(2) 4;
-}
-
-@keyframes deniedFlash {
-    0% { background: #200; }
-    100% { background: #000; }
-}
-
-.bigDenied {
+#bigDenied {
     position: absolute;
     inset: 0;
     background: #000;
     color: #f00;
     font-size: 60px;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
-    animation: bigDeniedFlash 0.8s steps(2) infinite;
-}
-
-@keyframes bigDeniedFlash {
-    0% { opacity: 0.3; }
-    100% { opacity: 1; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================================ -->
-<!--          INTRO SCREEN            -->
-<!-- ================================ -->
-
 <div id="introScreen">INITIALIZING SYSTEM...</div>
-
-<!-- ================================ -->
-<!--          LOGIN SCREEN            -->
-<!-- ================================ -->
 
 <div id="loginScreen">
     <div id="terminal">
         <span>ENTER PASSWORD: </span><span id="fakeText"></span>
     </div>
-    <input id="realInput" type="password" autocomplete="off" tabindex="0">
+    <input id="realInput" type="password" autocomplete="off">
     <div id="alertBox"></div>
 </div>
 
-<!-- ================================ -->
-<!--          BIG ACCESS DENIED       -->
-<!-- ================================ -->
-
-<div id="bigDenied" style="display:none;">ACCESS DENIED</div>
+<div id="bigDenied">ACCESS DENIED</div>
 
 <script>
-/* ================================ */
-/*          INTRO → LOGIN           */
-/* ================================ */
-
+/* INTRO → LOGIN */
 setTimeout(() => {
-    const intro = document.getElementById('introScreen');
-    const login = document.getElementById('loginScreen');
-
-    intro.style.opacity = '0';
-
+    introScreen.style.opacity = "0";
     setTimeout(() => {
-        intro.style.display = 'none';
-        login.style.display = 'flex';
-        login.classList.add('loginEnter');
-        realInput.focus();
-        setTimeout(() => realInput.focus(), 100);
+        introScreen.style.display = "none";
+        loginScreen.style.display = "flex";
+        forceFocus();
     }, 1500);
-
 }, 3000);
 
-/* ================================ */
-/*          LOGIN LOGIC             */
-/* ================================ */
-
+/* VARIABLES */
 let errorCount = 0;
 let locked = false;
 
 const realInput = document.getElementById("realInput");
 const fakeText = document.getElementById("fakeText");
-const terminal = document.getElementById("terminal");
 const alertBox = document.getElementById("alertBox");
 
+/* =============================== */
+/*   SISTEMA DE FOCUS FORÇAT       */
+/* =============================== */
+
+function forceFocus() {
+    realInput.focus();
+    realInput.click();
+
+    /* Reintenta focus cada 50ms fins que l'usuari escrigui */
+    const interval = setInterval(() => {
+        if (document.activeElement !== realInput) {
+            realInput.focus();
+            realInput.click();
+        }
+        if (realInput.value.length > 0) clearInterval(interval);
+    }, 50);
+}
+
+/* Quan l'usuari fa clic a qualsevol lloc → focus */
+document.addEventListener("click", () => {
+    realInput.focus();
+});
+
+/* Quan l'usuari tecleja → actualitza fakeText */
 realInput.addEventListener("input", () => {
     fakeText.textContent = "*".repeat(realInput.value.length);
 });
 
-realInput.addEventListener("keydown", (e) => {
+/* ENTER → verificar */
+realInput.addEventListener("keydown", e => {
     if (e.key === "Enter") verificar();
 });
 
-/* ================================ */
-/*          ALERT SYSTEM            */
-/* ================================ */
-
+/* ALERTES */
 function showAlert(msg, color = "red") {
     alertBox.textContent = msg;
-    alertBox.classList.remove("alert-red", "alert-green");
-    alertBox.classList.add(color === "red" ? "alert-red" : "alert-green");
+    alertBox.className = color === "red" ? "alert-red" : "alert-green";
     alertBox.style.opacity = "1";
-
-    setTimeout(() => {
-        alertBox.style.opacity = "0";
-    }, 1200);
+    setTimeout(() => alertBox.style.opacity = "0", 1200);
 }
 
-/* ================================ */
-/*          ACCESS GRANTED          */
-/* ================================ */
-
+/* ACCESS GRANTED */
 function playAccessGranted(url) {
     showAlert("ACCESS GRANTED", "green");
-
-    setTimeout(() => {
-        window.location.href = url;
-    }, 800);
+    setTimeout(() => window.location.href = url, 800);
 }
 
-/* ================================ */
-/*          ACCESS DENIED BIG       */
-/* ================================ */
-
+/* ACCESS DENIED */
 function showAccessDeniedBig() {
     document.getElementById("bigDenied").style.display = "flex";
 }
+function lockSystem() { locked = true; }
 
-function lockSystem() {
-    locked = true;
-}
-
-/* ================================ */
-/*          VERIFY FUNCTION         */
-/* ================================ */
-
+/* VERIFICAR */
 function verificar() {
     if (locked) return;
 
@@ -258,41 +182,25 @@ function verificar() {
 
     if (!clave) {
         errorCount++;
-        terminal.classList.add("access-denied");
         showAlert("EMPTY INPUT");
-
         realInput.value = "";
         fakeText.textContent = "";
-        realInput.focus();
-
-        if (errorCount >= 3) {
-            showAccessDeniedBig();
-            lockSystem();
-        }
-
-        setTimeout(() => terminal.classList.remove("access-denied"), 600);
+        forceFocus();
+        if (errorCount >= 3) { showAccessDeniedBig(); lockSystem(); }
         return;
     }
 
-    const PASSWORD = "1234"; // ← CANVIA AQUI LA TEVA CONTRASENYA
+    const PASSWORD = "1234";
 
     if (clave === PASSWORD) {
         playAccessGranted("ethos.html");
     } else {
         errorCount++;
-        terminal.classList.add("access-denied");
         showAlert("WRONG PASSWORD");
-
         realInput.value = "";
         fakeText.textContent = "";
-        realInput.focus();
-
-        if (errorCount >= 3) {
-            showAccessDeniedBig();
-            lockSystem();
-        }
-
-        setTimeout(() => terminal.classList.remove("access-denied"), 600);
+        forceFocus();
+        if (errorCount >= 3) { showAccessDeniedBig(); lockSystem(); }
     }
 }
 </script>
