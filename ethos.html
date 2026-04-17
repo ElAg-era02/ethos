@@ -379,22 +379,6 @@ function drawMatrix() {
 }
 setInterval(drawMatrix, 50);
 
-/* INTRO → LOGIN */
-const realInput = document.getElementById('realInput');
-
-  
-setTimeout(() => {
-  const intro = document.getElementById('introScreen');
-  const login = document.getElementById('loginScreen');
-
-  intro.style.opacity = '0';
-
-  setTimeout(() => {
-    intro.style.display = 'none';
-    login.style.display = 'flex';
-    realInput.focus();
-  }, 1500);
-}, 5000);
 
 /* LISTA DE JUEGOS (BUIT) */
 const juegosRaw = [];
