@@ -425,9 +425,10 @@ function toggleFav(nombre, e) {
   mostrarJuegos(searchBar.value, false);
 }
 
-/* ABRIR JUEGO */
+/* SISTEMA ANTIC */
 function abrirJuego(url) {
-  window.open(url, "_blank", "noopener,noreferrer");
+  const win = window.open("", "_blank", "noopener,noreferrer");
+  win.location = url;
 }
 
 /* BUSCADOR */
