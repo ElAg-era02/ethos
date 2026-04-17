@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ETHOS TECHNOLOGIES V3</title>
-
   <style>
-
   /* === GRID === */
   .grid {
     display: grid;
@@ -15,20 +13,17 @@
     width: 100%;
     max-width: 1200px;
   }
-
   /* === SCROLLBAR BASE (VERD) === */
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-track { background: #050505; }
   ::-webkit-scrollbar-thumb {
     background: #00ff00;
     border: 1px solid #003300;
-    filter: none !important;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: #33ff33;
     box-shadow: 0 0 10px #0f0;
   }
-
   /* === SCROLLBAR TEMA VERMELL === */
   body.theme-red::-webkit-scrollbar-thumb {
     background: #ff0000;
@@ -37,7 +32,6 @@
   body.theme-red::-webkit-scrollbar-thumb:hover {
     background: #ff3333;
   }
-
   /* === SCROLLBAR TEMA BLAU === */
   body.theme-blue::-webkit-scrollbar-thumb {
     background: #00aaff;
@@ -46,13 +40,11 @@
   body.theme-blue::-webkit-scrollbar-thumb:hover {
     background: #33cfff;
   }
-
   /* === ANIMACIÓ MATRIX === */
   @keyframes matrixReveal {
     0% { opacity: 0; transform: scaleX(0.9) translateY(10px); clip-path: inset(0 50% 0 50%); filter: brightness(5) blur(5px); }
     100% { opacity: 1; transform: scaleX(1) translateY(0); clip-path: inset(0 0 0 0); filter: brightness(1) blur(0); }
   }
-
   /* === BODY BASE (VERD) === */
   body {
     cursor: url('https://files.catbox.moe/9744ia.cur'), auto;
@@ -69,18 +61,8 @@
     position: relative;
     transition: color 0.3s ease, filter 0.3s ease;
   }
-
-  /* === BODY TEMA VERMELL === */
-  body.theme-red {
-    color: #ff0000;
-    filter: none !important;
-  }
-
-  /* === BODY TEMA BLAU === */
-  body.theme-blue {
-    color: #00aaff;
-    filter: none !important;
-  }
+  body.theme-red { color: #ff0000; }
+  body.theme-blue { color: #00aaff; }
 
   /* === TOPBAR === */
   #ethos-topbar {
@@ -93,7 +75,6 @@
     z-index: 99999;
     backdrop-filter: blur(4px);
   }
-
   .top-btn {
     background: transparent;
     border: 1px solid currentColor;
@@ -142,7 +123,6 @@
     display: flex; gap: 8px; margin-bottom: 30px;
     flex-wrap: wrap; justify-content: center;
   }
-
   .cat-btn {
     background: transparent;
     border: 1px solid currentColor;
@@ -164,40 +144,55 @@
     font-size: 0.75rem; letter-spacing: 1px;
     z-index: 99999;
   }
-  .status-bar div:nth-child(2) {
-    flex: 1;
-    text-align: center;
-  }
 
   /* === GAME CARDS === */
-  .game-card { position: relative; display: flex; opacity: 0; }
+  .game-card { 
+    position: relative; 
+    display: flex; 
+    opacity: 0; 
+  }
   .game-card.animate { animation: matrixReveal 0.4s ease forwards; }
 
   .btn-hacker {
-    flex-grow: 1; background: rgba(0,0,0,0.4);
+    flex-grow: 1; 
+    background: rgba(0,0,0,0.4);
     border: 1px solid currentColor;
-    color: currentColor; padding: 14px;
-    font-weight: bold; text-transform: uppercase;
-    transition: 0.3s; text-align: left;
-    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+    color: currentColor; 
+    padding: 14px;
+    font-weight: bold; 
+    text-transform: uppercase;
+    transition: 0.3s; 
+    text-align: left;
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+    cursor: pointer;
   }
-  .btn-hacker:hover { background: currentColor; color: #000; box-shadow: 0 0 20px currentColor; transform: translateY(-2px); }
+  .btn-hacker:hover { 
+    background: currentColor; 
+    color: #000; 
+    box-shadow: 0 0 20px currentColor; 
+    transform: translateY(-2px); 
+  }
 
   .fav-star {
-    position: absolute; right: 8px; top: 50%;
+    position: absolute; 
+    right: 8px; 
+    top: 50%;
     transform: translateY(-50%);
-    background: transparent; border: none;
-    color: currentColor; font-size: 1.2rem;
+    background: transparent; 
+    border: none;
+    color: currentColor; 
+    font-size: 1.2rem;
     opacity: 0.5;
     transition: 0.2s;
+    cursor: pointer;
   }
   .fav-star:hover { opacity: 1; }
   .fav-star.active { color: #ff0; text-shadow: 0 0 10px #ff0; opacity: 1; }
-
   </style>
 </head>
 <body>
-
   <!-- MATRIX BACKGROUND -->
   <canvas id="matrix"></canvas>
 
@@ -213,7 +208,7 @@
 
   <!-- VPN NOTICE -->
   <div class="vpn-notice">
-    JUEGOS BLOQUEADOS? —
+    JUEGOS BLOQUEADOS? — 
     <a href="https://chromewebstore.google.com/detail/free-vpn-for-chrome-vpn-p/majdfhpaihoncoakbjgbdhglocklcgno" target="_blank">
       DESCARGAR FREEVPN
     </a>
@@ -229,7 +224,7 @@
   <!-- CATEGORIES -->
   <div class="categories" id="catBar"></div>
 
-  <!-- GAME GRID (sense jocs encara) -->
+  <!-- GAME GRID -->
   <div class="grid" id="listaJuegos"></div>
 
   <!-- STATUS BAR -->
@@ -238,11 +233,9 @@
     <div><span id="clock">00:00:00</span></div>
     <div>v.236</div>
   </div>
-<script>
 
-/* ============================
-      MATRIX BACKGROUND
-============================ */
+<script>
+// ====================== MATRIX BACKGROUND ======================
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 
@@ -260,26 +253,24 @@ let drops = Array(columns).fill(1);
 
 function drawMatrix() {
   ctx.fillStyle = 'rgba(5,5,5,0.05)';
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = '#0f0';
   ctx.font = fontSize + 'px Courier New';
 
-  for (let i=0;i<drops.length;i++) {
-    const text = chars.charAt(Math.floor(Math.random()*chars.length));
-    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+  for (let i = 0; i < drops.length; i++) {
+    const text = chars.charAt(Math.floor(Math.random() * chars.length));
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-    if (drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
     drops[i]++;
   }
 }
 setInterval(drawMatrix, 50);
 
-
-/* ============================
-      VARIABLES BASE
-============================ */
-let juegos = [
+// ====================== VARIABLES ======================
+let juegos = [ /* ... tu lista completa de juegos (sin cambios) ... */ 
     { nombre: "Ballistic", url: "https://ubg98.github.io/Ballistic/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-ballistic.png" },
   { nombre: "Blumgi Slime", url: "https://ubg98.github.io/BlumgiSlime/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-blumgi-slime.png" },
   { nombre: "Fruit Ninja", url: "https://ubg98.github.io/FruitNinja/", categoria: "PUZZLE", logo: "https://example.com/logo-fruit-ninja.png" },
@@ -391,7 +382,8 @@ let juegos = [
   { nombre: "Venge.io", url: "https://venge.io/", categoria: "ACCION", logo: "https://example.com/logo-venge-io.png" },
   { nombre: "Vex4", url: "https://ubg98.github.io/Vex4/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-vex4.png" },
   { nombre: "Tetris", url: "https://block-blast.io/block-blast.embed", categoria: "ARCADE", logo: "https://example.com/logo-tetris.png" }
-];   
+];
+
 let favoritos = JSON.parse(localStorage.getItem("ethos_favs")) || [];
 let currentCat = "ALL";
 
@@ -399,167 +391,132 @@ const catBar = document.getElementById("catBar");
 const contenedor = document.getElementById("listaJuegos");
 const searchBar = document.getElementById("searchBar");
 
-
-/* ============================
-      GENERAR CATEGORIES
-============================ */
+// ====================== GENERAR CATEGORÍAS ======================
 function generarCategorias() {
   catBar.innerHTML = "";
   let finalTags = [];
-
-  const extraTags = [...new Set(juegos.map(j => j.categoria))].sort();
-
+  
   if (favoritos.length > 0) finalTags.push("FAVS");
   finalTags.push("ALL");
+  
+  const extraTags = [...new Set(juegos.map(j => j.categoria))].sort();
   finalTags = [...finalTags, ...extraTags];
 
   finalTags.forEach(tag => {
     const btn = document.createElement("button");
     btn.className = `cat-btn ${currentCat === tag ? "active" : ""}`;
-    btn.textContent =
-      tag === "FAVS" ? "* FAVORITOS" :
-      tag === "ALL" ? "SYSTEM_ALL" :
-      tag;
-
+    btn.textContent = tag === "FAVS" ? "* FAVORITOS" : tag === "ALL" ? "SYSTEM_ALL" : tag;
+    
     btn.onclick = () => {
       currentCat = tag;
       generarCategorias();
       mostrarJuegos(searchBar.value);
     };
-
     catBar.appendChild(btn);
   });
 }
 
+// ====================== CREAR TARJETA DE JUEGO ======================
+function crearTarjeta(juego) {
+  const card = document.createElement("div");
+  card.className = "game-card";
+  card.innerHTML = `
+    <button class="btn-hacker" onclick="abrirJuego('${juego.url}')">
+      ${juego.nombre}
+    </button>
+    <button class="fav-star ${favoritos.includes(juego.nombre) ? 'active' : ''}" 
+            onclick="toggleFav('${juego.nombre}', event)">★</button>
+  `;
+  return card;
+}
 
-/* ============================
-      MOSTRAR JUEGOS (BUIT)
-============================ */
+// ====================== MOSTRAR JUEGOS ======================
 function mostrarJuegos(filtro = "", animate = true) {
   contenedor.innerHTML = "";
 
   const filtrados = juegos.filter(j => {
-    const matchSearch = j.nombre?.toLowerCase().includes(filtro.toLowerCase());
-    const matchCat =
-      currentCat === "ALL" ||
-      (currentCat === "FAVS"
-        ? favoritos.includes(j.nombre)
-        : j.categoria === currentCat);
-
+    const matchSearch = j.nombre.toLowerCase().includes(filtro.toLowerCase());
+    const matchCat = currentCat === "ALL" ||
+                     (currentCat === "FAVS" ? favoritos.includes(j.nombre) : j.categoria === currentCat);
     return matchSearch && matchCat;
   });
 
-  // Encara no hi ha jocs, així que només actualitzem el comptador
+  filtrados.forEach((juego, index) => {
+    const card = crearTarjeta(juego);
+    if (animate) {
+      card.style.animationDelay = (index * 30) + "ms";
+      card.classList.add("animate");
+    }
+    contenedor.appendChild(card);
+  });
+
   document.getElementById("counter").textContent = filtrados.length;
 }
 
-
-/* ============================
-      FAVORITOS
-============================ */
+// ====================== FAVORITOS ======================
 function toggleFav(nombre, e) {
   e.stopPropagation();
-
-  favoritos = favoritos.includes(nombre)
-    ? favoritos.filter(f => f !== nombre)
-    : [...favoritos, nombre];
-
+  if (favoritos.includes(nombre)) {
+    favoritos = favoritos.filter(f => f !== nombre);
+  } else {
+    favoritos.push(nombre);
+  }
   localStorage.setItem("ethos_favs", JSON.stringify(favoritos));
-
   generarCategorias();
   mostrarJuegos(searchBar.value, false);
 }
 
-
-/* ============================
-      OBRIR JOC (MODE ANTIC)
-============================ */
+// ====================== ABRIR JUEGO ======================
 function abrirJuego(url) {
   const win = window.open("about:blank", "_blank");
-
   win.document.write(`
     <html>
       <head>
         <title>ETHOS — GAME MODE</title>
         <style>
-          html, body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            overflow: hidden;
-            height: 100%;
-            width: 100%;
-          }
-          iframe {
-            border: none;
-            width: 100vw;
-            height: 100vh;
-          }
+          html, body { margin:0; padding:0; background:#000; overflow:hidden; height:100%; width:100%; }
+          iframe { border:none; width:100vw; height:100vh; }
         </style>
       </head>
-      <body>
-        <iframe src="${url}" allowfullscreen></iframe>
-      </body>
+      <body><iframe src="${url}" allowfullscreen></iframe></body>
     </html>
   `);
-
   win.document.close();
 }
 
-
-/* ============================
-      BUSCADOR
-============================ */
+// ====================== BUSCADOR ======================
 searchBar.addEventListener("input", () => {
   mostrarJuegos(searchBar.value);
 });
 
-
-/* ============================
-      SISTEMA DE TEMES
-============================ */
+// ====================== TEMAS ======================
 let themeIndex = 0;
-
 function cycleTheme() {
   document.body.classList.remove("theme-red", "theme-blue");
-
   themeIndex = (themeIndex + 1) % 3;
-
   if (themeIndex === 1) document.body.classList.add("theme-red");
   if (themeIndex === 2) document.body.classList.add("theme-blue");
 }
 
-
-/* ============================
-      BOTONS TOPBAR
-============================ */
+// ====================== BOTONES TOPBAR ======================
 function openEthosAI() {
   window.open("https://ethos-ai.vercel.app", "_blank");
 }
-
 function openSpotify() {
   window.open("https://open.spotify.com", "_blank");
 }
 
-
-/* ============================
-      CLOCK
-============================ */
+// ====================== RELOJ ======================
 function updateClock() {
   const now = new Date();
-  document.getElementById("clock").textContent =
-    now.toLocaleTimeString("es-ES");
+  document.getElementById("clock").textContent = now.toLocaleTimeString("es-ES");
 }
 setInterval(updateClock, 1000);
 updateClock();
 
-
-/* ============================
-      INICIALITZACIÓ
-============================ */
+// ====================== INICIO ======================
 generarCategorias();
 mostrarJuegos();
-
 </script>
 </body>
 </html>
