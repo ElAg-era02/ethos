@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- TÍTOL I LOGO DE LA PESTANYA -->
   <title>Ethos Technologies</title>
+  <link rel="icon" type="image/png" href="https://i.imgur.com/3G3ZQhC.png">
 
   <style>
     /* ============================
@@ -39,40 +42,7 @@
     body.theme-blue::-webkit-scrollbar-thumb { background: #00aaff; }
 
     /* ============================
-          ANIMACIONS SIMPLES
-    ============================ */
-
-    @keyframes matrixReveal {
-      0% { opacity: 0; transform: translateY(10px) scale(0.97); filter: blur(4px); }
-      100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-    }
-
-    @keyframes titleGlitch {
-      0% { transform: skew(0deg); }
-      20% { transform: skew(6deg); }
-      22% { transform: skew(-6deg); }
-      24% { transform: skew(0deg); }
-      100% { transform: skew(0deg); }
-    }
-
-    @keyframes scanFlash {
-      0% { opacity: 0; }
-      10% { opacity: 0.8; }
-      100% { opacity: 0; }
-    }
-
-    .theme-transition {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0));
-      pointer-events: none;
-      animation: scanFlash 0.25s ease-out;
-      z-index: 999999;
-    }
-
-    /* ============================
-          BODY
+          BODY (SENSE ANIMACIÓ)
     ============================ */
     body {
       background: #050505;
@@ -84,7 +54,6 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      animation: matrixReveal 0.5s ease-out;
     }
 
     body.theme-red { color: #ff0000; }
@@ -101,7 +70,6 @@
       display: flex; align-items: center; gap: 18px;
       padding: 0 30px;
       z-index: 99999;
-      animation: matrixReveal 0.6s ease forwards;
     }
 
     .top-btn {
@@ -132,11 +100,6 @@
       text-shadow: 0 0 15px currentColor;
       margin: 10px 0 25px 0;
       text-transform: uppercase;
-      animation: matrixReveal 0.7s ease forwards;
-    }
-
-    h1:hover {
-      animation: titleGlitch 0.25s linear;
     }
 
     /* ============================
@@ -148,7 +111,6 @@
       margin-bottom: 32px;
       text-shadow: 0 0 8px currentColor;
       text-align: center;
-      animation: matrixReveal 0.8s ease forwards;
     }
 
     /* ============================
@@ -159,7 +121,6 @@
       border: 2.5px solid currentColor;
       padding: 16px 22px;
       background: rgba(0,0,0,0.9);
-      animation: matrixReveal 0.9s ease forwards;
     }
 
     #searchBar {
@@ -177,7 +138,6 @@
     .categories {
       display: flex; gap: 12px; margin-bottom: 40px;
       flex-wrap: wrap; justify-content: center;
-      animation: matrixReveal 1s ease forwards;
     }
 
     .cat-btn {
@@ -202,7 +162,49 @@
       border-width: 2px;
       background: rgba(0,0,0,0.8);
     }
-<link rel="icon" type="image/png" href="https://i.imgur.com/3G3ZQhC.png">
+
+    /* ============================
+          GAME CARDS (SENSE ANIMACIÓ)
+    ============================ */
+    .game-card {
+      position: relative;
+      display: flex;
+      opacity: 1;
+    }
+
+    .btn-hacker {
+      flex-grow: 1;
+      background: transparent;
+      border: 1px solid currentColor;
+      color: currentColor;
+      padding: 16px 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: 0.25s ease;
+      text-align: left;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      font-size: 1.02rem;
+    }
+
+    .btn-hacker:hover {
+      opacity: 1;
+      box-shadow: 0 0 14px currentColor;
+      transform: scale(0.96);
+    }
+
+    .fav-star {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: transparent; border: none;
+      color: currentColor; font-size: 1.5rem;
+      opacity: 0.7; cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .fav-star:hover { opacity: 1; transform: translateY(-50%) scale(1.25); }
+    .fav-star.active { color: #ffff00; text-shadow: 0 0 12px #ffff00; }
 
     /* ============================
           STATUS BAR
@@ -214,7 +216,6 @@
       border-top: 3px solid currentColor;
       display: flex; justify-content: space-between; align-items: center;
       font-size: 0.84rem; z-index: 99999;
-      animation: matrixReveal 1.1s ease forwards;
     }
   </style>
 </head>
@@ -228,7 +229,7 @@
     <button class="top-btn" onclick="cycleTheme()">[ THEME ]</button>
   </div>
 
-  <h1>[ ETHOS_SYSTEM ]</h1>
+  <h1>[ ETHOS TECHNOLOGIES ]</h1>
 
   <div class="vpn-notice">
     JUEGOS BLOQUEADOS? — 
@@ -318,18 +319,13 @@
       if (themeIndex === 2) document.body.classList.add("theme-blue");
 
       localStorage.setItem("ethos_theme", themeIndex);
-
-      const flash = document.createElement("div");
-      flash.className = "theme-transition";
-      document.body.appendChild(flash);
-      setTimeout(() => flash.remove(), 300);
     }
 
     /* ============================
           VARIABLES BASE
     ============================ */
     let juegos = [
-      { nombre: "Ballistic", url: "https://ubg98.github.io/Ballistic/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-ballistic.png" },
+        { nombre: "Ballistic", url: "https://ubg98.github.io/Ballistic/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-ballistic.png" },
   { nombre: "Blumgi Slime", url: "https://ubg98.github.io/BlumgiSlime/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-blumgi-slime.png" },
   { nombre: "Fruit Ninja", url: "https://ubg98.github.io/FruitNinja/", categoria: "PUZZLE", logo: "https://example.com/logo-fruit-ninja.png" },
   { nombre: "Save the Doge", url: "https://ubg98.github.io/SaveTheDoge/", categoria: "PUZZLE", logo: "https://example.com/logo-save-the-doge.png" },
@@ -440,7 +436,7 @@
   { nombre: "Venge.io", url: "https://venge.io/", categoria: "ACCION", logo: "https://example.com/logo-venge-io.png" },
   { nombre: "Vex4", url: "https://ubg98.github.io/Vex4/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-vex4.png" },
   { nombre: "Tetris", url: "https://block-blast.io/block-blast.embed", categoria: "ARCADE", logo: "https://example.com/logo-tetris.png" }
-    ];
+    ]; 
 
     let favoritos = JSON.parse(localStorage.getItem("ethos_favs")) || [];
     let currentCat = "ALL";
@@ -498,8 +494,7 @@
 
       filtrados.forEach((juego, index) => {
         const div = document.createElement("div");
-        div.className = "game-card" + (animate ? " animate" : "");
-        div.style.animationDelay = `${Math.min(index * 0.03, 1.2)}s`;
+        div.className = "game-card";
 
         div.innerHTML = `
           <button class="btn-hacker">
