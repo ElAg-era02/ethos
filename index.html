@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- TÍTOL I LOGO DE LA PESTANYA -->
+  <!-- TÍTOL I FAVICON -->
   <title>Ethos Technologies</title>
-  <link rel="icon" type="image/png" href="https://i.imgur.com/3G3ZQhC.png">
+  <link rel="icon" type="image/png" href="https://cdn-1.webcatalog.io/catalog/hacker-typer/hacker-typer-icon.png">
 
   <style>
     /* ============================
@@ -322,11 +322,38 @@
     }
 
     /* ============================
-          FUNCIONS JOCS
+          FUNCIONS JOCS (IFRAME)
     ============================ */
     function abrirJuego(url) {
-      if (!url) return;
-      window.open(url, "_blank");
+      const win = window.open("about:blank", "_blank");
+
+      win.document.write(`
+        <html>
+          <head>
+            <title>ETHOS — GAME MODE</title>
+            <style>
+              html, body {
+                margin: 0;
+                padding: 0;
+                background: #000;
+                overflow: hidden;
+                height: 100%;
+                width: 100%;
+              }
+              iframe {
+                border: none;
+                width: 100vw;
+                height: 100vh;
+              }
+            </style>
+          </head>
+          <body>
+            <iframe src="${url}" allowfullscreen></iframe>
+          </body>
+        </html>
+      `);
+
+      win.document.close();
     }
 
     function toggleFav(nombre, ev) {
@@ -456,8 +483,8 @@
   { nombre: "Venge.io", url: "https://venge.io/", categoria: "ACCION", logo: "https://example.com/logo-venge-io.png" },
   { nombre: "Vex4", url: "https://ubg98.github.io/Vex4/", categoria: "PLATAFORMAS", logo: "https://example.com/logo-vex4.png" },
   { nombre: "Tetris", url: "https://block-blast.io/block-blast.embed", categoria: "ARCADE", logo: "https://example.com/logo-tetris.png" }
-    ];
-
+    ]; 
+    
     let favoritos = JSON.parse(localStorage.getItem("ethos_favs")) || [];
     let currentCat = "ALL";
 
