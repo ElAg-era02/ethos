@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- TÍTOL I FAVICON -->
+  <!-- TÍTOL I ICONA -->
   <title>Ethos Technologies</title>
   <link rel="icon" type="image/png" href="https://cdn-1.webcatalog.io/catalog/hacker-typer/hacker-typer-icon.png">
 
@@ -32,7 +32,7 @@
     }
 
     /* ============================
-          SCROLLBAR
+      SCROLLBAR (CANVIS DE COLOR)
     ============================ */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #050505; }
@@ -41,9 +41,6 @@
     body.theme-red::-webkit-scrollbar-thumb { background: #ff0000; }
     body.theme-blue::-webkit-scrollbar-thumb { background: #00aaff; }
 
-    /* ============================
-          BODY (SENSE ANIMACIÓ)
-    ============================ */
     body {
       background: #050505;
       color: #00ff00;
@@ -91,7 +88,7 @@
     }
 
     /* ============================
-          TITLE
+          TÍTOL
     ============================ */
     h1 {
       font-size: 2.6rem;
@@ -103,7 +100,7 @@
     }
 
     /* ============================
-          VPN NOTICE
+          VPN (AVÍS)
     ============================ */
     .vpn-notice {
       color: currentColor;
@@ -114,7 +111,7 @@
     }
 
     /* ============================
-          SEARCH
+          BUSCAR
     ============================ */
     .search-wrapper { width: 100%; max-width: 650px; margin-bottom: 32px; }
     .search-container {
@@ -163,9 +160,6 @@
       background: rgba(0,0,0,0.8);
     }
 
-    /* ============================
-          GAME CARDS
-    ============================ */
     .game-card {
       position: relative;
       display: flex;
@@ -206,9 +200,6 @@
     .fav-star:hover { opacity: 1; transform: translateY(-50%) scale(1.25); }
     .fav-star.active { color: #ffff00; text-shadow: 0 0 12px #ffff00; }
 
-    /* ============================
-          STATUS BAR
-    ============================ */
     .status-bar {
       position: fixed; bottom: 0; left: 0; right: 0;
       height: 52px; padding: 0 30px;
@@ -259,7 +250,7 @@
 
   <script>
     /* ============================
-          MATRIX BACKGROUND
+          MATRIX FONS
     ============================ */
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
@@ -305,7 +296,7 @@
     setInterval(drawMatrix, 50);
 
     /* ============================
-          THEME MEMORY
+          TEMES (MEMÒRIA)
     ============================ */
     let themeIndex = 0;
 
@@ -375,10 +366,12 @@
     }
 
     /* ============================
-          VARIABLES BASE
+          JOCS
     ============================ */
     let juegos = [
   { nombre: "Dialed", url: "https://dialed.gg/", categoria: "PUZZLE", logo: "https://example.com/logo-ballistic.png" },
+  { nombre: "Golf Hit", url: "https://azgames.io/golf-hit", categoria: "DEPORTES", logo: "https://example.com/logo-ballistic.png" },
+  { nombre: "Bow Battle", url: "https://gamea.azgame.io/bow-battle/", categoria: "ACCION", logo: "https://example.com/logo-ballistic.png" },
   { nombre: "Escape Road City 3", url: "https://gamea.azgame.io/escape-road-3/", categoria: "MOTOR", logo: "https://example.com/logo-ballistic.png" },
   { nombre: "Hole.io", url: "https://gamea.azgame.io/hole-arena/", categoria: "IDLE", logo: "https://example.com/logo-ballistic.png" },
   { nombre: "Crossy Road", url: "https://azgames.io/game/crossy-road/", categoria: "PUZZLE", logo: "https://example.com/logo-ballistic.png" },
@@ -570,7 +563,7 @@
     }
 
     /* ============================
-          CLOCK
+          RELLOTGE
     ============================ */
     function updateClock() {
       document.getElementById("clock").textContent =
@@ -580,7 +573,7 @@
     updateClock();
 
     /* ============================
-          TOPBAR BUTTONS
+          TOPBAR (BOTONS)
     ============================ */
     function openEthosChat() {
       window.open("https://ethos-chat.vercel.app/", "_blank");
@@ -590,9 +583,6 @@
       window.open("https://open.spotify.com/embed/playlist/4L7KXkQeIQpxWNdXMfBVSM?utm_source=generator&theme=0", "_blank");
     }
 
-    /* ============================
-          INIT
-    ============================ */
     generarCategorias();
     mostrarJuegos();
   </script>
