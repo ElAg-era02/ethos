@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ethos Technologies</title>
   <link rel="icon" type="image/png" href="https://cdn-1.webcatalog.io/catalog/hacker-typer/hacker-typer-icon.png">
+
   <style>
     /* ============================
           MATRIX BACKGROUND
@@ -16,6 +17,7 @@
       z-index: -1;
       pointer-events: none;
     }
+
     /* ============================
           GRID
     ============================ */
@@ -26,8 +28,9 @@
       width: 100%;
       max-width: 1250px;
     }
+
     /* ============================
-      SCROLLBAR
+          SCROLLBAR
     ============================ */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #050505; }
@@ -50,7 +53,9 @@
     body.theme-red { color: #ff0000; }
     body.theme-blue { color: #00aaff; }
 
-    /* TOPBAR */
+    /* ============================
+          TOPBAR
+    ============================ */
     #ethos-topbar {
       position: fixed; top: 0; left: 0; right: 0;
       height: 66px;
@@ -60,6 +65,7 @@
       padding: 0 30px;
       z-index: 99999;
     }
+
     .top-btn {
       background: transparent;
       border: 1px solid currentColor;
@@ -70,6 +76,7 @@
       text-transform: uppercase;
       transition: 0.25s ease;
       opacity: 0.85;
+      cursor: pointer;
     }
     .top-btn:hover {
       opacity: 1;
@@ -77,6 +84,9 @@
       transform: scale(0.96);
     }
 
+    /* ============================
+          TITLES & TEXT
+    ============================ */
     h1 {
       font-size: 2.6rem;
       letter-spacing: 7px;
@@ -94,7 +104,9 @@
       text-align: center;
     }
 
-    /* BUSCADOR CON BOTÓN */
+    /* ============================
+          SEARCH BAR
+    ============================ */
     .search-wrapper { 
       width: 100%; 
       max-width: 650px; 
@@ -133,7 +145,9 @@
       box-shadow: 0 0 15px currentColor;
     }
 
-    /* CATEGORIES */
+    /* ============================
+          CATEGORIES
+    ============================ */
     .categories {
       display: flex; gap: 12px; margin-bottom: 40px;
       flex-wrap: wrap; justify-content: center;
@@ -147,6 +161,7 @@
       transition: 0.25s ease;
       text-transform: uppercase;
       opacity: 0.7;
+      cursor: pointer;
     }
     .cat-btn:hover {
       opacity: 1;
@@ -159,6 +174,9 @@
       background: rgba(0,0,0,0.8);
     }
 
+    /* ============================
+          GAME CARDS
+    ============================ */
     .game-card {
       position: relative;
       display: flex;
@@ -183,16 +201,10 @@
       box-shadow: 0 0 14px currentColor;
       transform: scale(0.96);
     }
-    .fav-star {
-      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-      background: transparent; border: none;
-      color: currentColor; font-size: 1.5rem;
-      opacity: 0.7; cursor: pointer;
-      transition: 0.25s ease;
-    }
-    .fav-star:hover { opacity: 1; transform: translateY(-50%) scale(1.25); }
-    .fav-star.active { color: #ffff00; text-shadow: 0 0 12px #ffff00; }
 
+    /* ============================
+          STATUS BAR
+    ============================ */
     .status-bar {
       position: fixed; bottom: 0; left: 0; right: 0;
       height: 52px; padding: 0 30px;
@@ -203,9 +215,13 @@
     }
   </style>
 </head>
+
 <body>
   <canvas id="matrix"></canvas>
 
+  <!-- ============================
+          TOPBAR
+  ============================ -->
   <div id="ethos-topbar">
     <button class="top-btn" onclick="openEthosChat()">[ ETHOS_CHAT ]</button>
     <button class="top-btn" onclick="openSpotify()">[ SPOTIFY ]</button>
@@ -214,11 +230,13 @@
   </div>
 
   <h1>[ GAME SECTION ]</h1>
+
   <div class="vpn-notice">
     JUEGOS BLOQUEADOS? — 
     <a href="https://chromewebstore.google.com/detail/free-vpn-for-chrome-vpn-p/majdfhpaihoncoakbjgbdhglocklcgno" target="_blank">DESCARGAR FREEVPN</a>
   </div>
 
+  <!-- SEARCH -->
   <div class="search-wrapper">
     <div class="search-container">
       <input type="text" id="searchBar" placeholder="SYSTEM SEARCH ..." autocomplete="off">
@@ -226,15 +244,22 @@
     </div>
   </div>
 
+  <!-- CATEGORIES -->
   <div class="categories" id="catBar"></div>
+
+  <!-- GAME GRID -->
   <div class="grid" id="listaJuegos"></div>
 
+  <!-- STATUS BAR -->
   <div class="status-bar">
     <div>NÚMERO DE JUEGOS: <span id="counter">0</span></div>
     <div><span id="clock">00:00:00</span></div>
     <div>v.236</div>
   </div>
 
+  <!-- ============================
+          JAVASCRIPT
+  ============================ -->
   <script>
     /* MATRIX BACKGROUND */
     const canvas = document.getElementById('matrix');
@@ -287,228 +312,91 @@
       localStorage.setItem("ethos_theme", themeIndex);
     }
 
-    /* JUEGOS */
-    let juegos = [
-      { nombre: "Cannon Balls", url: "https://play.famobi.com/cannon-balls-3d", categoria: "PUZZLE" },
-      { nombre: "Fun Race 3D", url: "https://play.famobi.com/fun-race-3d", categoria: "IDLE" },
-      { nombre: "Ping Pong 3D", url: "https://play.famobi.com/table-tennis-world-tour", categoria: "PUZZLE" },
-      { nombre: "Archery (WT)", url: "https://play.famobi.com/archery-world-tour", categoria: "DEPORTES" },
-      { nombre: "Dialed", url: "https://dialed.gg/", categoria: "PUZZLE" },
-      { nombre: "Golf Hit", url: "https://azgames.io/golf-hit", categoria: "DEPORTES" },
-      { nombre: "Bow Battle", url: "https://gamea.azgame.io/bow-battle/", categoria: "ACCION" },
-      { nombre: "Escape Road City 3", url: "https://gamea.azgame.io/escape-road-3/", categoria: "MOTOR" },
-      { nombre: "Hole.io", url: "https://gamea.azgame.io/hole-arena/", categoria: "IDLE" },
-      { nombre: "Crossy Road", url: "https://azgames.io/game/crossy-road/", categoria: "PUZZLE" },
-      { nombre: "Ballistic", url: "https://ubg98.github.io/Ballistic/", categoria: "PLATAFORMAS" },
-      { nombre: "Blumgi Slime", url: "https://ubg98.github.io/BlumgiSlime/", categoria: "PLATAFORMAS" },
-      { nombre: "Fruit Ninja", url: "https://ubg98.github.io/FruitNinja/", categoria: "PUZZLE" },
-      { nombre: "Save the Doge", url: "https://ubg98.github.io/SaveTheDoge/", categoria: "PUZZLE" },
-      { nombre: "Shell Shockers", url: "https://mathlete.pages.dev/", categoria: "ACCION" },
-      { nombre: "Football Strike", url: "https://ubg98.github.io/FootballStrike/", categoria: "DEPORTES" },
-      { nombre: "Little Alchemy 2", url: "https://ubg98.github.io/LittleAlchemy2/", categoria: "PUZZLE" },
-      { nombre: "Stick Merge", url: "https://ubg98.github.io/StickMerge2/", categoria: "ACCION" },
-      { nombre: "Supermario Wonder", url: "https://ubg98.github.io/SuperMarioWonder/", categoria: "PLATAFORMAS" },
-      { nombre: "Spacebar Clicker", url: "https://ubg98.github.io/SpaceBarClicker/", categoria: "IDLE" },
-      { nombre: "Cookie Clicker 2", url: "https://ubg98.github.io/CookieClicker2/", categoria: "IDLE" },
-      { nombre: "Heads Arena", url: "https://ubg98.github.io/HeadsArenaSoccerAllStars/", categoria: "DEPORTES" },
-      { nombre: "Mr Bullet", url: "https://ubg98.github.io/MrBullet/", categoria: "PUZZLE" },
-      { nombre: "Bloons TD", url: "https://bloonstowerdefense.io/", categoria: "ESTRATEGIA" },
-      { nombre: "Drive Mad", url: "https://ubg98.github.io/DriveMad/", categoria: "MOTOR" },
-      { nombre: "Little War", url: "https://www.littlewargame.com/", categoria: "ESTRATEGIA" },
-      { nombre: "Parking Fury 2", url: "https://ubg98.github.io/ParkingFury2/", categoria: "MOTOR" },
-      { nombre: "Parking Fury 3", url: "https://ubg98.github.io/ParkingFury3/", categoria: "MOTOR" },
-      { nombre: "OvO Dimensions", url: "https://freetoplayz.github.io/ovo-dimensions/", categoria: "PLATAFORMAS" },
-      { nombre: "Plants vs Zombies", url: "https://turbowarp.org/807023495/embed", categoria: "ESTRATEGIA" },
-      { nombre: "Territorial.io", url: "https://territorial.io/", categoria: "ESTRATEGIA" },
-      { nombre: "Scary Wheels", url: "https://azgames.io/scary-wheels.embed", categoria: "ACCION" },
-      { nombre: "Level Devil", url: "https://level-devil.io/level-devil.embed", categoria: "ARCADE" },
-      { nombre: "Rocket League 2D", url: "https://zz7nm.csb.app/", categoria: "MOTOR" },
-      { nombre: "Traffic", url: "https://freezenova.com/db2/2022/unity/highway-traffic/pre.html", categoria: "MOTOR" },
-      { nombre: "GTA V", url: "https://spacewaves2.io/embed/gta-simulator", categoria: "SIMULACION" },
-      { nombre: "Drift Kings", url: "https://www.onlinegames.io/games/2024/unity/drift-king/index.html", categoria: "MOTOR" },
-      { nombre: "Stack", url: "https://www.onlinegames.io/games/2021/unity/stack-fire-ball/index.html", categoria: "ARCADE" },
-      { nombre: "Big Bubbles", url: "https://www.kodub.com/apps/bigbubbles", categoria: "ARCADE" },
-      { nombre: "Ages of Conflict", url: "https://geet.in.net/get/ages-of-conflict/game.html", categoria: "ESTRATEGIA" },
-      { nombre: "Buscaminas", url: "https://buscaminas.eu/", categoria: "ARCADE" },
-      { nombre: "Poke Aidle", url: "https://html-classic.itch.zone/html/16860709/dist/index.html?v=1773943543", categoria: "ARCADE" },
-      { nombre: "Hollow Knight", url: "https://2games.io/game/hollow-knight/", categoria: "TERROR" },
-      { nombre: "Aquapark", url: "https://geet.in.net/get/aquapark-slides/game.html", categoria: "ARCADE" },
-      { nombre: "2048", url: "https://specials.manoramaonline.com/Mobile/2022/2048-game/index.html", categoria: "PUZZLE" },
-      { nombre: "99 Nights Forest", url: "https://script.google.com/macros/s/AKfycbw4urIQgR3zAfmFsn3NWFC6kpsGYSWafyi6AWtyVNSyBkySH9O46LVnhej6fW7beFME/exec", categoria: "AVENTURA" },
-      { nombre: "Animal Craft", url: "https://gamea.azgame.io/animal-craft/", categoria: "SIMULACION" },
-      { nombre: "Aquapark (Idle)", url: "https://script.google.com/macros/s/AKfycbyMFmC4rSHnvW_Etgd0io14Q4bD4BnfEk9RHlCue81lueG4LbYq1MmU7ujp1SGvR5HX/exec", categoria: "IDLE" },
-      { nombre: "Backrooms (Free)", url: "https://geet.in.net/get/backrooms/game.html", categoria: "TERROR" },
-      { nombre: "Basket Legends", url: "https://unblocked-games-786.github.io/Basketball-Legends-2020/", categoria: "DEPORTES" },
-      { nombre: "Basket Random", url: "https://legalizenuclearbombs5.github.io/games/Basket%20Random", categoria: "DEPORTES" },
-      { nombre: "Bit Life", url: "https://legalizenuclearbombs5.github.io/games/bitlife", categoria: "SIMULACION" },
-      { nombre: "Block Breaker", url: "https://brick-breaker.io/embed/block-breaker", categoria: "ARCADE" },
-      { nombre: "Bob the Robber 2", url: "https://legalizenuclearbombs5.github.io/games/bobtherobber2", categoria: "ACCION" },
-      { nombre: "Boxel Rebound", url: "https://trinculo54.github.io/Boxel-rebound-hope/Older", categoria: "PLATAFORMAS" },
-      { nombre: "Carrier Landing", url: "https://www.gamearter.com/game/fighter-aircraft-pilot/", categoria: "MOTOR" },
-      { nombre: "Cars Arena", url: "https://gamesnacks.com/games/14q56300gkdl0", categoria: "MOTOR" },
-      { nombre: "Crazy Taxi", url: "https://gamea.azgame.io/crazy-taxi/", categoria: "MOTOR" },
-      { nombre: "Crazy4Speed", url: "https://games.s3.yandex.net/167367/bkkcaaw6gn99xniz1f0iapdbmhdjlnc3/index.html", categoria: "MOTOR" },
-      { nombre: "Cuphead", url: "https://html-classic.itch.zone/html/14775576/cuphead/index.html", categoria: "ACCION" },
-      { nombre: "Dig Out of Prison", url: "https://script.google.com/macros/s/AKfycby-5VSTOBeep9g9GU9un8CLFOo4TvTSmahbVEGqze-hX-iVmuLUtIyx6WAj2wvOYQeb/exec", categoria: "PUZZLE" },
-      { nombre: "Drift Hunters", url: "https://htmlxm.github.io/h/drift-hunters/", categoria: "MOTOR" },
-      { nombre: "Escape Road City 2", url: "https://game.azgame.io/escape-road-city-2/", categoria: "MOTOR" },
-      { nombre: "Extreme Pamplona", url: "https://www.juegosjuegos.com/embed/extreme-pamplona", categoria: "ACCION" },
-      { nombre: "F1 Racer", url: "https://adogames.com/embed/3d-formula-racing/index.html", categoria: "MOTOR" },
-      { nombre: "Fireboy & Watergirl", url: "https://fireboyandwatergirlunblocked.github.io/", categoria: "PUZZLE" },
-      { nombre: "FNAF (Epstein)", url: "https://fivenightsatepsteins.org/fivenightsatepsteins-online/embed", categoria: "TERROR" },
-      { nombre: "FNAF (Pedro)", url: "https://html-classic.itch.zone/html/15985212/index.html", categoria: "TERROR" },
-      { nombre: "FNAF 1", url: "https://irv77.github.io/hd_fnaf/1", categoria: "TERROR" },
-      { nombre: "FNAF 2", url: "https://irv77.github.io/hd_fnaf/2", categoria: "TERROR" },
-      { nombre: "FNAF 3", url: "https://irv77.github.io/hd_fnaf/3", categoria: "TERROR" },
-      { nombre: "FNAF 4", url: "https://irv77.github.io/hd_fnaf/4", categoria: "TERROR" },
-      { nombre: "FNAF IMPOSIBLE", url: "https://turbowarp.org/1274214003/embed?autoplay=true&fps=60", categoria: "TERROR" },
-      { nombre: "FNAF SL", url: "https://irv77.github.io/hd_fnaf/sl", categoria: "TERROR" },
-      { nombre: "FNAF UCN", url: "https://irv77.github.io/hd_fnaf/ucn", categoria: "TERROR" },
-      { nombre: "Foso Cliker", url: "https://sigmacompanyoficial.github.io/Idle-Foso-Cliker/", categoria: "IDLE" },
-      { nombre: "Geo Guesser", url: "https://www.openguessr.com", categoria: "PUZZLE" },
-      { nombre: "Geometry Dash", url: "https://ozgames.io/geo-dash.embed/", categoria: "PLATAFORMAS" },
-      { nombre: "Golf Puzzle", url: "https://gamea.azgame.io/golf-puzzle/", categoria: "DEPORTES" },
-      { nombre: "Google Snake", url: "https://googlesnake-online.github.io/file/", categoria: "ARCADE" },
-      { nombre: "GoogooGaga Clicker", url: "https://gamea.azgame.io/goo-goo-gaga-clicker/", categoria: "IDLE" },
-      { nombre: "Gun Spin", url: "https://geet.in.net/get/gunspin/embed.html", categoria: "ACCION" },
-      { nombre: "Hacker Sim", url: "https://pranx.com/hacker/simulador/", categoria: "SIMULACION" },
-      { nombre: "HeadSoccer 2022", url: "https://www.contezero.com/games/arcade/head-soccer-2022/play:full/", categoria: "DEPORTES" },
-      { nombre: "HeadSoccer 2024", url: "https://azgames.io/head-soccer-2024.embed/", categoria: "DEPORTES" },
-      { nombre: "HeadSoccer Halloween", url: "https://head-soccer.github.io/halloween-head-soccer/index.html", categoria: "DEPORTES" },
-      { nombre: "Iron Snout", url: "https://classroom8.github.io/iron-snout/", categoria: "ACCION" },
-      { nombre: "Knife Master", url: "https://gamea.azgame.io/knife-master/", categoria: "ARCADE" },
-      { nombre: "Lostgamer", url: "https://lostgamer.io/guessr/maps", categoria: "PUZZLE" },
-      { nombre: "Mario", url: "https://playmario.github.io/HTML5_Client/", categoria: "PLATAFORMAS" },
-      { nombre: "Minecraft", url: "https://eaglercraft.q13x.com/1.8.8/js/", categoria: "AVENTURA" },
-      { nombre: "Monkey Mart", url: "https://monkey-mart.gamestores.fun/", categoria: "SIMULACION" },
-      { nombre: "MotoX3M", url: "https://moto-x3m.bitbucket.io/file/", categoria: "MOTOR" },
-      { nombre: "Orbit Kick", url: "https://gamea.azgame.io/orbit-kick/", categoria: "DEPORTES" },
-      { nombre: "PacMan", url: "https://arcader.org/game/", categoria: "ARCADE" },
-      { nombre: "Paper.io 2", url: "https://paperio2.gitlab.io/file", categoria: "ARCADE" },
-      { nombre: "Papercraft", url: "https://turbowarp.org/10128407/embed?autoplay=true&fps=60/", categoria: "AVENTURA" },
-      { nombre: "Planet Clicker", url: "https://planetclickerx.github.io/", categoria: "IDLE" },
-      { nombre: "Pokémon (FV)", url: "https://ubg89.github.io/PokemonFireredVersion", categoria: "ARCADE" },
-      { nombre: "Pokémon (HG)", url: "https://classicjoy.games/embed?slug=pokemon-heartgold", categoria: "ARCADE" },
-      { nombre: "Pokémon (SV)", url: "https://classicjoy.games/embed?slug=pokemon-sapphire", categoria: "ARCADE" },
-      { nombre: "PolyTrack", url: "https://www.kodub.com/apps/polytrack/", categoria: "MOTOR" },
-      { nombre: "Ragdoll Arena", url: "https://gamea.azgame.io/ragdoll-arena/", categoria: "ACCION" },
-      { nombre: "Skip it!", url: "https://gamea.azgame.io/skip-it/", categoria: "ARCADE" },
-      { nombre: "Slap Champions", url: "https://gamea.azgame.io/slap-champions/", categoria: "ACCION" },
-      { nombre: "Slope", url: "https://azgames.io/slope.embed/", categoria: "PLATAFORMAS" },
-      { nombre: "Slow Roads", url: "https://hackingschoolwebsites.github.io/slowroads", categoria: "MOTOR" },
-      { nombre: "Smash Karts", url: "https://smashkarts.io/", categoria: "MOTOR" },
-      { nombre: "Sonic", url: "https://foxeh89.github.io/SonicAGES-web/", categoria: "PLATAFORMAS" },
-      { nombre: "Stickman Parkour", url: "https://script.google.com/macros/s/AKfycbwmHiH-ifVw054CFLpPM7qyZfLfwebB1KTGCqKzm0iJopITachomI745g6ttdHt2NZ6/exec", categoria: "PLATAFORMAS" },
-      { nombre: "Subway Surfers", url: "https://legalizenuclearbombs5.github.io/games/subway-surfers-ny", categoria: "PLATAFORMAS" },
-      { nombre: "Superhot", url: "https://geet.in.net/get/superhot/game.html", categoria: "ACCION" },
-      { nombre: "Tap Road", url: "https://azgames.io/tap-road.embed", categoria: "ARCADE" },
-      { nombre: "The Backrooms (Game)", url: "https://html-classic.itch.zone/html/7671420/index.html", categoria: "TERROR" },
-      { nombre: "Tiny Fishing", url: "https://legalizenuclearbombs5.github.io/games/Tiny%20Fishing", categoria: "DEPORTES" },
-      { nombre: "Traffic Road", url: "https://azgames.io/traffic-road.embed", categoria: "MOTOR" },
-      { nombre: "Trineo 3D", url: "https://gamea.azgame.io/slope-rider-3d/", categoria: "MOTOR" },
-      { nombre: "Undead Corridor", url: "https://gamea.azgame.io/undead-corridor/", categoria: "TERROR" },
-      { nombre: "Venge.io", url: "https://venge.io/", categoria: "ACCION" },
-      { nombre: "Vex4", url: "https://ubg98.github.io/Vex4/", categoria: "PLATAFORMAS" },
-      { nombre: "Tetris", url: "https://block-blast.io/block-blast.embed", categoria: "ARCADE" }
-    ];
+    /* ============================
+          CÀRREGA DE JOCS
+    ============================ */
+    let juegos = JSON.parse(localStorage.getItem("juegosRaw") || "[]");
+    let categoriaActual = "ALL";
 
-    let favoritos = JSON.parse(localStorage.getItem("ethos_favs")) || [];
-    let currentCat = "ALL";
+    function mostrarJuegos(filtro = "") {
+      const lista = document.getElementById("listaJuegos");
+      lista.innerHTML = "";
 
-    const catBar = document.getElementById("catBar");
-    const contenedor = document.getElementById("listaJuegos");
-    const searchBar = document.getElementById("searchBar");
+      const filtrados = juegos.filter(j =>
+        (categoriaActual === "ALL" || j.category.toUpperCase() === categoriaActual) &&
+        j.name.toLowerCase().includes(filtro.toLowerCase())
+      );
 
-    function generarCategorias() {
-      catBar.innerHTML = "";
-      let finalTags = [];
-      const extraTags = [...new Set(juegos.map(j => j.categoria))].sort();
-      if (favoritos.length > 0) finalTags.push("FAVS");
-      finalTags.push("ALL");
-      finalTags = [...finalTags, ...extraTags];
+      document.getElementById("counter").textContent = filtrados.length;
 
-      finalTags.forEach(tag => {
-        const btn = document.createElement("button");
-        btn.className = `cat-btn ${currentCat === tag ? "active" : ""}`;
-        btn.dataset.cat = tag;
-        btn.textContent = tag === "FAVS" ? "* FAVORITOS" : tag === "ALL" ? "SYSTEM_ALL" : tag;
-        btn.onclick = () => {
-          currentCat = tag;
-          generarCategorias();
-          mostrarJuegos(searchBar.value);
-        };
-        catBar.appendChild(btn);
+      filtrados.forEach(juego => {
+        const card = document.createElement("div");
+        card.className = "game-card";
+        card.innerHTML = `
+          <button class="btn-hacker" onclick="abrirJuego('${juego.url}')">> ${juego.name}</button>
+        `;
+        lista.appendChild(card);
       });
     }
 
-    function mostrarJuegos(filtro = "") {
-      contenedor.innerHTML = "";
-      let filtrados = juegos.filter(j => {
-        const matchSearch = j.nombre.toLowerCase().includes(filtro.toLowerCase());
-        const matchCat = currentCat === "ALL" || 
-                        (currentCat === "FAVS" ? favoritos.includes(j.nombre) : j.categoria === currentCat);
-        return matchSearch && matchCat;
+    function generarCategorias() {
+      const catBar = document.getElementById("catBar");
+      catBar.innerHTML = "";
+
+      const categories = ["ALL", ...new Set(juegos.map(j => j.category.toUpperCase()))];
+
+      categories.forEach(cat => {
+        const btn = document.createElement("button");
+        btn.className = "cat-btn";
+        btn.textContent = cat;
+        btn.onclick = () => {
+          categoriaActual = cat;
+          document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          mostrarJuegos(document.getElementById("searchBar").value);
+        };
+        if (cat === "ALL") btn.classList.add("active");
+        catBar.appendChild(btn);
       });
-
-      filtrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
-
-      filtrados.forEach(juego => {
-        const div = document.createElement("div");
-        div.className = "game-card";
-        div.innerHTML = `
-          <button class="btn-hacker" onclick="abrirJuego('${juego.url}')">
-            > ${juego.nombre}
-          </button>
-          <button class="fav-star ${favoritos.includes(juego.nombre) ? "active" : ""}" 
-                  onclick="toggleFav('${juego.nombre}', event)">★</button>
-        `;
-        contenedor.appendChild(div);
-      });
-
-      document.getElementById("counter").textContent = filtrados.length;
     }
 
     function abrirJuego(url) {
       const win = window.open("about:blank", "_blank");
       win.document.write(`
-        <html><head><title>ETHOS — GAME MODE</title>
-        <style>html,body{margin:0;padding:0;background:#000;overflow:hidden;height:100%;width:100%;}iframe{border:none;width:100vw;height:100vh;}</style>
-        </head><body><iframe src="${url}" allowfullscreen></iframe></body></html>
+        <style>
+          body { margin:0; background:#000; }
+          iframe { width:100vw; height:100vh; border:none; }
+        </style>
+        <iframe src="${url}"></iframe>
       `);
-      win.document.close();
     }
 
-    function toggleFav(nombre, ev) {
-      ev.stopPropagation();
-      const idx = favoritos.indexOf(nombre);
-      if (idx === -1) favoritos.push(nombre);
-      else favoritos.splice(idx, 1);
-      localStorage.setItem("ethos_favs", JSON.stringify(favoritos));
+    /* AUTO-RELOAD DES DE ADMIN */
+    document.addEventListener("DOMContentLoaded", () => {
+      if (localStorage.getItem("ethosNeedsReload") === "1") {
+        localStorage.removeItem("ethosNeedsReload");
+        location.reload();
+      }
+
       generarCategorias();
-      mostrarJuegos(searchBar.value);
-    }
+      mostrarJuegos();
+    });
 
-    /* RELOJ */
-    function updateClock() {
-      document.getElementById("clock").textContent = new Date().toLocaleTimeString("es-ES");
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
+    /* CLOCK */
+    setInterval(() => {
+      const now = new Date();
+      document.getElementById("clock").textContent =
+        now.toLocaleTimeString("es-ES");
+    }, 1000);
 
-    /* BOTONES TOPBAR */
+    /* TOPBAR BUTTONS */
     function openEthosChat() {
-      window.open("https://ethos-chat.vercel.app/", "_blank");
+      window.location.href = "chat.html";
     }
     function openSpotify() {
-      window.open("https://open.spotify.com/embed/playlist/4L7KXkQeIQpxWNdXMfBVSM?utm_source=generator&theme=0", "_blank");
+      window.location.href = "spotify.html";
     }
-
-    // Inicializar
-    generarCategorias();
-    mostrarJuegos();
-
-    // Búsqueda en tiempo real
-    searchBar.addEventListener("input", () => mostrarJuegos(searchBar.value));
   </script>
+
 </body>
 </html>
